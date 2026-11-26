@@ -143,6 +143,9 @@ html:lang(hi) body * { letter-spacing: normal !important; text-transform: none !
 
 .screen {
   --camera-clearance: calc((var(--phone-height) - 2px) * (var(--camera-top) + var(--camera-height)) - var(--phone-edge));
+  /* how far in from the top and right edges a 44px round button can sit and still clear the screen's rounded corner
+     (radius R = 6.25% of the phone's height): its centre on the corner's diagonal, 6px inside the curve */
+  --corner-inset: calc(var(--phone-height) * .0625 * .293 - 2px);
   position: relative;
   width: 100%;
   height: 100%;
@@ -174,7 +177,7 @@ html:lang(hi) body * { letter-spacing: normal !important; text-transform: none !
   .stage { padding: 0; place-items: stretch; }
   .phone { width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; box-shadow: none; }
   .backdrop, .phone-buttons, .phone-camera, .home-indicator { display: none; }
-  .screen { --camera-clearance: 0px; border-radius: 0; }
+  .screen { --camera-clearance: 0px; --corner-inset: 2.5cqw; border-radius: 0; }
 }
 
 .art {

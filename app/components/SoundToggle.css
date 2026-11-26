@@ -2,8 +2,10 @@
 .sound-toggle {
   position: absolute;
   z-index: 30;
-  top: calc(var(--camera-clearance, 0px) + max(3cqw, env(safe-area-inset-top)) - .5cqw);
-  right: 3.5cqw;
+  /* tucked into the top-right corner, beside the camera (globals.css --corner-inset keeps it inside the rounded
+     corner of the drawn phone); on a real phone, below the status bar */
+  top: max(var(--corner-inset, 2.5cqw), env(safe-area-inset-top));
+  right: var(--corner-inset, 2.5cqw);
   display: flex;
   align-items: center;
   gap: 6px;
