@@ -108,6 +108,7 @@
   box-shadow: 0 1cqw 2cqw #3a0b1a80, inset 0 0 0 1.6cqw #ffffff22, inset 0 0 0 2.2cqw #00000022;
   color: #5a2a14;
   font: italic 6cqw/1 var(--script);
+  font-synthesis-style: none;
   cursor: pointer;
   animation: seal-pulse 1.8s ease-in-out infinite;
 }

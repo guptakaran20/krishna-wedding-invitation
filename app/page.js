@@ -25,7 +25,15 @@ import { startArtLoader } from './lib/artLoader';
 import { startIdleNudge } from './lib/idleNudge';
 import { applyLite, watchFrames } from './lib/device';
 
-const HINDI_FONT = 'https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&display=swap';
+// Web fonts, added once the page is up so they never block the first paint:
+//   Pinyon Script, the copperplate script of the headings and names (it used to be whatever script the device had:
+//     Snell Roundhand on Apple, the casual Segoe Script on Windows/Edge). Same width and height as Snell Roundhand.
+//   Great Vibes for the "&" alone (text=&, about 1 KB): Pinyon's own ampersand is an odd hooked glyph.
+//   Tiro Devanagari Hindi for the Hindi headings.
+const FONTS = [
+  'https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Tiro+Devanagari+Hindi&display=swap',
+  'https://fonts.googleapis.com/css2?family=Great+Vibes&text=%26&display=swap',
+];
 
 // The invitation scrolls inside the phone. The opening, storybook, and Events hold their scenes in place while you scroll.
 export default function Invitation() {
@@ -90,9 +98,10 @@ export default function Invitation() {
     // paintings in the order the guest sees them, idle loops off while off screen, lite mode for phones that struggle
     applyLite();
     const stopArt = startArtLoader(root);
-    // the Hindi heading face, added once the page is up so it never blocks the first paint
-    if (!document.querySelector(`link[href="${HINDI_FONT}"]`)) {
-      document.head.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href: HINDI_FONT }));
+    for (const href of FONTS) {
+      if (!document.querySelector(`link[href="${href}"]`)) {
+        document.head.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href }));
+      }
     }
     const stopFrames = watchFrames();
     // three seconds without a scroll, the page drifts on by itself

@@ -14,7 +14,8 @@
 
 :root {
   --serif: Georgia, 'Times New Roman', 'Tiro Devanagari Hindi', 'Noto Devanagari', serif;
-  --script: 'Snell Roundhand', 'Segoe Script', 'Brush Script MT', 'Instrument Serif', 'Tiro Devanagari Hindi', cursive;
+  /* Great Vibes is loaded with only its "&" (page.js), so every other letter falls through to Pinyon Script */
+  --script: 'Great Vibes', 'Pinyon Script', 'Snell Roundhand', 'Instrument Serif', 'Tiro Devanagari Hindi', cursive;
   --ivory: #fff5ef;
   --gold: #fae8a7;
   --paper: #fbe6bd;
@@ -49,7 +50,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   clip-path: inset(50%);
 }
 
-.script { font-family: var(--script); font-weight: 400; font-style: italic; }
+/* the script faces are slanted already: no fake italic on top (only Instrument Serif, a true italic, takes the style) */
+.script { font-family: var(--script); font-weight: 400; font-style: italic; font-synthesis-style: none; }
 
 /* Hindi: Devanagari has no italic, and spaced-out or upper-cased letters break its joined letters apart */
 html:lang(hi) .script { font-style: normal; }

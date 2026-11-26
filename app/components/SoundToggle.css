@@ -2,7 +2,7 @@
 .sound-toggle {
   position: absolute;
   z-index: 30;
-  top: calc(var(--camera-clearance, 0px) + max(3cqw, env(safe-area-inset-top)) + 1cqw);
+  top: calc(var(--camera-clearance, 0px) + max(3cqw, env(safe-area-inset-top)) - .5cqw);
   right: 3.5cqw;
   display: flex;
   align-items: center;
