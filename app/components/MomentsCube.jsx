@@ -128,11 +128,20 @@ export default function MomentsCube() {
       touchY = y;
     };
     const end = () => { touchY = null; };
+    // the page's idle auto-scroll (lib/idleNudge.js) moves the scene along a step while it holds the page
+    const nudge = (event) => {
+      const state = scene.current;
+      if (state.mode !== 'playing') return;
+      event.preventDefault();
+      state.target = Math.min(1.08, Math.max(0, state.target) + event.detail * 1.5 / SCREENS);
+    };
+    scroller.addEventListener('idlenudge', nudge);
     page.addEventListener('wheel', wheel, { passive: true });
     scroller.addEventListener('touchstart', start, { passive: true });
     scroller.addEventListener('touchmove', touch, { passive: true });
     scroller.addEventListener('touchend', end, { passive: true });
     return () => {
+      scroller.removeEventListener('idlenudge', nudge);
       page.removeEventListener('wheel', wheel);
       scroller.removeEventListener('touchstart', start);
       scroller.removeEventListener('touchmove', touch);
@@ -145,6 +154,12 @@ export default function MomentsCube() {
   useEffect(() => {
     const root = stage.current;
     const els = Array.from(root.querySelectorAll('.cube-tile'));
+    // what each tile was last given, so a frame only touches what changed (an unchanged write still costs a style pass)
+    const shades = els.map((el) => el.querySelector('.cube-shade'));
+    const wrote = els.map(() => ({ opacity: '', shade: '' }));
+    let pileHeight = '';
+    let lidOpacity = '';
+    let measured = false;
     const lid = root.querySelector('.cube-lid');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let frame = 0;
@@ -181,8 +196,11 @@ export default function MomentsCube() {
       const cubeSpin = idle + p * 300;
       const bandSpin = idle * 1.3 + p * 360;
       const radius = 58 * u;
-      // Match the position and shape of the top postcard before the deck fades in.
-      if (!deckShown) {
+      // Match the position and shape of the top postcard before the deck fades in. Measured once, as the tiles start
+      // to gather (and again after a resize): reading the layout every frame forced a full layout pass each time.
+      if (gather <= 0) measured = false;
+      if (!deckShown && gather > 0 && !measured) {
+        measured = true;
         const card = root.querySelector('.deck-card.is-top');
         if (card) {
           const a = card.getBoundingClientRect();
@@ -193,7 +211,9 @@ export default function MomentsCube() {
           pileAt.heightRatio = card.offsetHeight / card.offsetWidth;
         }
       }
-      root.style.setProperty('--pile-tile-height', `${tile * mix(1, pileAt.heightRatio, gather)}px`);
+      // the tiles' height only changes while they gather into postcards; setting it every frame re-laid them all out
+      const height = `${(tile * mix(1, pileAt.heightRatio, gather)).toFixed(1)}px`;
+      if (height !== pileHeight) { pileHeight = height; root.style.setProperty('--pile-tile-height', height); }
 
       els.forEach((el, s) => {
         const k = Math.floor(s / 4);
@@ -219,12 +239,17 @@ export default function MomentsCube() {
           x = mix(cube.x, band.x, t); y = mix(cube.y, band.y, t); z = mix(cube.z, band.z, t); sc = mix(cube.s, band.s, t);
         }
         el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translate3d(${x}px, ${y}px, ${z}px) rotateZ(${rz}deg) scale(${sc})`;
-        el.style.opacity = (1 - fade).toFixed(3);
+        const opacity = (1 - fade).toFixed(2);
+        if (opacity !== wrote[s].opacity) { wrote[s].opacity = opacity; el.style.opacity = opacity; }
+        // the side turning away darkens: a shade layer of its own, so this is a compositor-only change, not a repaint
+        // of the tile (its photo, rim and shadow) on every frame
         const facing = Math.cos((wrap(ry) * Math.PI) / 180);
-        el.style.setProperty('--shade', (gather > .98 ? 0 : (1 - Math.max(0, facing)) * .55).toFixed(3));
+        const shade = (gather > .98 ? 0 : (1 - Math.max(0, facing)) * .55).toFixed(2);
+        if (shade !== wrote[s].shade && shades[s]) { wrote[s].shade = shade; shades[s].style.opacity = shade; }
       });
       lid.style.transform = `rotateX(-14deg) rotateY(${cubeSpin}deg) rotateX(90deg) translateZ(${edge / 2}px)`;
-      lid.style.opacity = (1 - clamp(burst * 2.5)).toFixed(3);
+      const lidNow = (1 - clamp(burst * 2.5)).toFixed(2);
+      if (lidNow !== lidOpacity) { lidOpacity = lidNow; lid.style.opacity = lidNow; }
       const stageNow = p > .84 ? 3 : p > .55 ? 2 : p > .22 ? 1 : 0;
       if (stageNow !== stageWas) {
         if (stageNow === 1 && stageWas === 0) sfx.whoosh(0, 1, .2, 250, 2200);
@@ -243,8 +268,10 @@ export default function MomentsCube() {
       if (visible && !frame) { last = performance.now(); frame = requestAnimationFrame(draw); }
     });
     io.observe(root);
+    const resized = () => { measured = false; };
+    window.addEventListener('resize', resized);
     draw(performance.now());
-    return () => { io.disconnect(); cancelAnimationFrame(frame); };
+    return () => { io.disconnect(); window.removeEventListener('resize', resized); cancelAnimationFrame(frame); };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -255,7 +282,8 @@ export default function MomentsCube() {
           <ul className="cube" aria-hidden="true" onClick={shuffle}>
             {list.current.map((item) => (
               <li key={item.slot} className={`cube-tile${item.deco ? ' is-deco' : ''}`}>
-                {item.deco ? <Deco kind={item.deco} /> : <span className="cube-photo"><img src={photos[item.photo].art} alt="" draggable="false" loading="lazy" /></span>}
+                {item.deco ? <Deco kind={item.deco} /> : <span className="cube-photo"><img src={photos[item.photo].art} alt="" draggable="false" loading="lazy" decoding="async" /></span>}
+                <i className="cube-shade" />
               </li>
             ))}
             <li className="cube-lid"><Deco kind="mono" /></li>

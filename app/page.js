@@ -22,6 +22,7 @@ import { Butterflies } from './components/Ornaments';
 import SoundToggle from './components/SoundToggle';
 import { LangProvider } from './lib/lang';
 import { startArtLoader } from './lib/artLoader';
+import { startIdleNudge } from './lib/idleNudge';
 import { applyLite, watchFrames } from './lib/device';
 
 const HINDI_FONT = 'https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&display=swap';
@@ -94,6 +95,8 @@ export default function Invitation() {
       document.head.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href: HINDI_FONT }));
     }
     const stopFrames = watchFrames();
+    // three seconds without a scroll, the page drifts on by itself
+    const stopNudge = startIdleNudge(control.current);
 
     update();
     root.addEventListener('scroll', schedule, { passive: true });
@@ -102,6 +105,7 @@ export default function Invitation() {
       reveal.disconnect();
       stopArt();
       stopFrames();
+      stopNudge();
       lenis?.destroy();
       control.current.lenis = null;
       root.removeEventListener('scroll', schedule);
