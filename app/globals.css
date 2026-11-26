@@ -1,0 +1,244 @@
+@font-face {
+  font-family: Instrument Serif;
+  src: url('/fonts/instrument-serif-latin-400-italic.woff2') format('woff2');
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Noto Devanagari;
+  src: url('/fonts/noto-sans-devanagari-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  --serif: Georgia, 'Times New Roman', 'Tiro Devanagari Hindi', 'Noto Devanagari', serif;
+  --script: 'Snell Roundhand', 'Segoe Script', 'Brush Script MT', 'Instrument Serif', 'Tiro Devanagari Hindi', cursive;
+  --ivory: #fff5ef;
+  --gold: #fae8a7;
+  --paper: #fbe6bd;
+  --paper-light: #fff3d9;
+  --ink: #4a2440;
+  --ink-soft: #6e4a55;
+  --rose: #8d2f4b;
+  --rose-bright: #a63f5b;
+  --brass: #b98b3e;
+  --brass-deep: #8a6424;
+  --brass-light: #e9c27a;
+  --leaf: #6f8a5a;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #e1ac9b; }
+h1, h2, h3, p, figure, ul { margin: 0; }
+a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--rose-bright);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.script { font-family: var(--script); font-weight: 400; font-style: italic; }
+
+/* Hindi: Devanagari has no italic, and spaced-out or upper-cased letters break its joined letters apart */
+html:lang(hi) .script { font-style: normal; }
+html:lang(hi) body * { letter-spacing: normal !important; text-transform: none !important; }
+
+/* ════════════════════════ the phone on a computer, full screen on a phone ════════════════════════ */
+
+.stage {
+  --phone-height: min(89.5dvh, 1080px);
+  --phone-edge: clamp(6px, 1.05dvh, 12px);
+  position: relative;
+  display: grid;
+  height: 100dvh;
+  place-items: center;
+  padding: 18px;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.backdrop { position: absolute; inset: 0; z-index: -1; overflow: hidden; background: #e0aa9b; }
+.backdrop::before {
+  content: '';
+  position: absolute;
+  inset: -15%;
+  background: url('/art/palace-backdrop.webp') center 40% / cover no-repeat;
+  filter: blur(43px) saturate(.82);
+  opacity: .82;
+}
+.backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 12% 50%, #fff6eb8f 0, transparent 41%),
+    radial-gradient(ellipse at 83% 54%, #fff8eb85 0, transparent 37%),
+    linear-gradient(180deg, #bd92785c, #f8b9ad42 55%, #e99ca4bd 100%);
+}
+
+.phone {
+  --camera-top: .0265;
+  --camera-height: .0405;
+  position: relative;
+  height: var(--phone-height);
+  width: calc(var(--phone-height) * .477);
+  max-width: 100%;
+  padding: var(--phone-edge);
+  border-radius: calc(var(--phone-height) * .074);
+  background: linear-gradient(145deg, #6f6c70 0, #1e2027 10%, #3a3c45 44%, #17181d 66%, #57575c 100%);
+  border: 1px solid #535159;
+  box-shadow: 0 16px 42px #46272f68, 0 3px 9px #28191277, inset 0 0 0 2px #24242a, inset 0 0 0 5px #0b0c10, inset 0 0 0 6px #484852;
+  isolation: isolate;
+}
+.phone-buttons i {
+  position: absolute;
+  display: block;
+  width: 3px;
+  left: -4px;
+  top: 17%;
+  height: 4%;
+  background: linear-gradient(90deg, #33333a, #65616a);
+  border-radius: 4px 0 0 4px;
+}
+.phone-buttons i:nth-child(2) { top: 24%; height: 7.2%; }
+.phone-buttons i:nth-child(3) { top: 33%; height: 7.2%; }
+.phone-buttons i:nth-child(4) { left: auto; right: -4px; top: 28%; height: 11%; border-radius: 0 4px 4px 0; }
+.phone-camera {
+  position: absolute;
+  z-index: 6;
+  top: calc(var(--camera-top) * 100%);
+  left: 50%;
+  width: 29.5%;
+  height: calc(var(--camera-height) * 100%);
+  border-radius: 100px;
+  transform: translateX(-50%);
+  background: #050507;
+  pointer-events: none;
+}
+.home-indicator {
+  position: absolute;
+  z-index: 6;
+  bottom: 2%;
+  left: 50%;
+  width: 32%;
+  height: max(3px, .48%);
+  border-radius: 100px;
+  transform: translateX(-50%);
+  background: #231e20a6;
+  pointer-events: none;
+}
+
+.screen {
+  --camera-clearance: calc((var(--phone-height) - 2px) * (var(--camera-top) + var(--camera-height)) - var(--phone-edge));
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--phone-height) * .0625);
+  background: var(--paper);
+  overflow: clip;
+  container-type: inline-size;
+  font-family: var(--serif);
+  color: var(--ink);
+  isolation: isolate;
+}
+
+/* the invitation scrolls inside the screen, natively */
+.scroller {
+  --scroll-end-clearance: max(5cqw, env(safe-area-inset-bottom));
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: clip;
+  overscroll-behavior: contain;
+  scroll-padding-block-end: var(--scroll-end-clearance);
+  scrollbar-width: none;
+}
+.scroller::-webkit-scrollbar { display: none; }
+/* held still while a scene plays (Lenis's own stopped style would clip the scroller and lose its position) */
+.scroller.is-locked, .scroller.lenis.lenis-stopped { overflow-y: hidden; touch-action: none; }
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .stage { padding: 0; place-items: stretch; }
+  .phone { width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; box-shadow: none; }
+  .backdrop, .phone-buttons, .phone-camera, .home-indicator { display: none; }
+  .screen { --camera-clearance: 0px; border-radius: 0; }
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* ════════════════════════ the continuous sheet ════════════════════════ */
+
+.sheet { position: relative; --events-frame-height: 194cqw; }
+.paper-surface {
+  --paper-wash: color-mix(in srgb, var(--paper) 82%, transparent);
+  background: linear-gradient(var(--paper-wash), var(--paper-wash)),
+    url('/art/paper-tile.webp') 0 0 / 62cqw 62cqw repeat var(--paper);
+}
+/* painted roses and jasmine climb both edges of the whole sheet */
+.paper-surface::before, .paper-surface::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 15cqw;
+  z-index: 0;
+  pointer-events: none;
+  background: url('/art/floral-border.webp') 0 0 / 100% auto repeat-y;
+  opacity: .62;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 6%, #000 94%, transparent);
+}
+.paper-surface::before { left: -1cqw; }
+.paper-surface::after { right: -1cqw; transform: scaleX(-1); background-position: 0 47cqw; }
+.sheet > section { position: relative; z-index: 1; }
+
+
+[data-reveal] { opacity: 0; translate: 0 5cqw; transition: opacity .9s cubic-bezier(.22, 1, .36, 1), translate .9s cubic-bezier(.22, 1, .36, 1); transition-delay: var(--rd, 0ms); }
+[data-reveal].is-in { opacity: 1; translate: none; }
+
+.pill {
+  display: inline-grid;
+  place-items: center;
+  min-height: max(34px, 9cqw);
+  padding: 0 5cqw;
+  border: 0;
+  border-radius: 99px;
+  color: #fff4e6;
+  background: linear-gradient(180deg, var(--rose-bright), var(--rose));
+  box-shadow: 0 2cqw 4cqw #8d2f4b40, inset 0 1px 0 #ffffff30;
+  font: 600 max(12px, 3.2cqw)/1 var(--serif);
+  letter-spacing: .06em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.pill:hover { transform: translateY(-1px); box-shadow: 0 3cqw 5cqw #8d2f4b55; }
+.pill:active { transform: scale(.97); }
+.pill.ghost { background: transparent; color: var(--rose); box-shadow: inset 0 0 0 1px var(--rose); }
+.text-button { border: 0; background: none; color: var(--rose); font-style: italic; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
+  .petals, .fireworks, .lanterns { display: none; }
+}
+
+/* shared keyframes */
+@keyframes turn { to { rotate: 360deg; } }
