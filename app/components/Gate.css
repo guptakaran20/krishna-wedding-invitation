@@ -1,0 +1,163 @@
+/* ════════════════════════ the palace gate (sticky while its doors open) ════════════════════════ */
+
+.gate-run { position: relative; height: calc(var(--sh, 100dvh) * 2.5); }
+.gate-stage { position: sticky; top: 0; height: var(--sh, 100dvh); overflow: clip; isolation: isolate; }
+.blessing-art { background-image: url('/art/garden-blessing.webp'); }
+.palace-art { background-image: url('/art/palace-gate.webp'); }
+
+.gate {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  transform-origin: 50% 72%;
+  transform: translateY(calc(-22% * var(--gate-approach, 0))) scale(calc(1 + 3.5 * var(--gate-approach, 0)));
+  opacity: calc(1 - var(--gate-fade, 0));
+  pointer-events: none;
+}
+.doorway {
+  position: absolute;
+  top: 43.2%;
+  bottom: 2.4%;
+  left: 20.6%;
+  right: 20.6%;
+  display: flex;
+  perspective: 210cqw;
+  perspective-origin: 50% 52%;
+}
+.door {
+  width: 50%;
+  height: 100%;
+  background-color: #c59a52;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  backface-visibility: hidden;
+  filter: brightness(calc(1 - .27 * var(--door-open, 0)));
+}
+.door-left { background-image: url('/art/door-left.webp'); transform-origin: left center; transform: rotateY(calc(89deg * var(--door-open, 0))); }
+.door-right { background-image: url('/art/door-right.webp'); transform-origin: right center; transform: rotateY(calc(-89deg * var(--door-open, 0))); }
+
+.gate-glow {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 70%;
+  width: 120cqw;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6d6 0, #ffe7a8cc 18%, #ffd27a55 38%, transparent 66%);
+  opacity: calc(var(--door-open, 0) * (1 - var(--blessing-reveal, 0)) * 1.3);
+  scale: calc(.5 + var(--gate-approach, 0) * 1.8);
+  pointer-events: none;
+}
+
+.scroll-prompt {
+  position: absolute;
+  z-index: 4;
+  bottom: max(5.9%, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: #3c2716;
+  text-shadow: 0 1px 2px #fff0bd;
+  font-size: max(13px, 3.55cqw);
+  font-weight: 600;
+  letter-spacing: .08em;
+  opacity: calc(1 - var(--prompt-fade, 0));
+  animation: bob 2.2s ease-in-out infinite;
+}
+@keyframes bob { 50% { translate: 0 1.2cqw; } }
+
+.blessing {
+  position: absolute;
+  inset-inline: 8%;
+  top: 22.4%;
+  z-index: 1;
+  text-align: center;
+  color: #294f2c;
+  font-family: Noto Devanagari, 'Nirmala UI', sans-serif;
+  font-weight: 500;
+  opacity: var(--blessing-reveal, 0);
+  translate: 0 calc(12px * (1 - var(--blessing-reveal, 0)));
+}
+.blessing h2 { font-size: 6.2cqw; font-weight: 500; clip-path: inset(0 calc(100% - 100% * var(--blessing-reveal, 0)) 0 0); }
+.blessing p { font-size: 4.85cqw; line-height: 1.45; margin-top: 3.4cqw; }
+.ganesha-wrap { position: relative; width: 41%; margin: 3.6cqw auto 0; }
+.ganesha { position: relative; display: block; width: 100%; height: auto; filter: drop-shadow(0 3px 3px #65432935); scale: calc(.82 + .18 * var(--blessing-reveal, 0)); }
+.ganesha-halo {
+  position: absolute;
+  inset: -22%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff7d9 0 30%, transparent 62%), repeating-conic-gradient(from 0deg, #f7d58a66 0 4deg, transparent 4deg 12deg);
+  -webkit-mask: radial-gradient(circle, #000 35%, transparent 70%);
+  mask: radial-gradient(circle, #000 35%, transparent 70%);
+  opacity: calc(var(--blessing-reveal, 0) * .9);
+  animation: turn 40s linear infinite;
+}
+@keyframes turn { to { rotate: 360deg; } }
+.blessing-petals { opacity: var(--blessing-reveal, 0); }
+
+/* the garden melts into the paper below, so the sheet begins without a seam */
+.garden-fade {
+  position: absolute;
+  inset: auto 0 0;
+  height: 26%;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent, var(--paper) 92%);
+  opacity: var(--blessing-reveal, 0);
+  pointer-events: none;
+}
+
+/* ── the gate comes alive ── */
+.gate-lights { left: 10%; right: 10%; top: 33%; width: 80%; height: 9%; }
+.gate-toran { position: absolute; left: 17%; width: 66%; top: 41%; transform-origin: 50% 0; animation: toran-sway 3.2s ease-in-out infinite alternate; filter: drop-shadow(0 1cqw 1cqw #3a1b1033); }
+.gate-diya { bottom: 1.5%; }
+.gate-diya-left { left: 9%; }
+.gate-diya-right { right: 9%; }
+/* the painted pair of elephants split in two: one guards each side and steps aside as the doors open */
+.gate-elephant {
+  position: absolute;
+  bottom: 0;
+  width: 30%;
+  aspect-ratio: 358 / 329;
+  background: url('/art/elephants.webp') 0 0 / 200% 100% no-repeat;
+  filter: drop-shadow(0 1cqw 1.4cqw #3a1b1044);
+  animation: elephant-sway 3.6s ease-in-out infinite alternate;
+}
+.gate-elephant-left { left: -4%; translate: calc(-40% * var(--door-open, 0)) 0; }
+.gate-elephant-right { right: -4%; background-position: 100% 0; translate: calc(40% * var(--door-open, 0)) 0; animation-delay: -1.8s; }
+@keyframes elephant-sway { to { rotate: -1.2deg; } }
+
+/* a glint of light sweeps over the closed doors */
+.door { position: relative; overflow: hidden; }
+.door-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, #fff6d499 48%, transparent 60%);
+  translate: -120% 0;
+  opacity: calc(1 - var(--door-open, 0) * 4);
+  animation: door-shine 3.6s ease-in-out infinite;
+}
+.door-right .door-shine { animation-delay: .25s; }
+@keyframes door-shine { 0%, 40% { translate: -120% 0; } 80%, 100% { translate: 120% 0; } }
+
+/* rays of light turn slowly behind the opening */
+.gate-rays {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 68%;
+  width: 190cqw;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, #fff3c255 0 6deg, transparent 6deg 18deg);
+  -webkit-mask: radial-gradient(circle, #000 8%, transparent 55%);
+  mask: radial-gradient(circle, #000 8%, transparent 55%);
+  opacity: calc(var(--door-open, 0) * (1 - var(--blessing-reveal, 0)));
+  animation: turn 24s linear infinite;
+  pointer-events: none;
+}
+
+.door-petals { z-index: 4; opacity: calc(1 - var(--blessing-reveal, 0) * .5); }
+.garden-birds { z-index: 0; inset: 6% 0 auto; height: 30%; opacity: var(--blessing-reveal, 0); }

@@ -1,0 +1,47 @@
+/* ── diya ── */
+.diya { position: absolute; width: 9cqw; height: 9cqw; pointer-events: none; }
+.diya-bowl { position: absolute; left: 0; right: 0; bottom: 0; height: 45%; border-radius: 0 0 50% 50% / 0 0 100% 100%; background: linear-gradient(180deg, #f3cf7a, #b6802e 60%, #7c4f17); box-shadow: inset 0 .4cqw 0 #ffe7a8; }
+.diya-flame { position: absolute; left: 50%; bottom: 38%; width: 2.6cqw; height: 4.6cqw; margin-left: -1.3cqw; border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; background: radial-gradient(ellipse at 50% 75%, #fff8d6 0, #ffd36a 35%, #ff8a2a 70%, transparent 72%); transform-origin: 50% 100%; animation: flicker .18s ease-in-out infinite alternate; animation-delay: var(--delay); }
+.diya-glow { position: absolute; left: 50%; bottom: 20%; width: 16cqw; aspect-ratio: 1; translate: -50% 30%; border-radius: 50%; background: radial-gradient(circle, #ffcf6f88, transparent 65%); animation: glow 2.4s ease-in-out infinite alternate; animation-delay: var(--delay); }
+@keyframes flicker { from { scale: 1 1; rotate: -3deg; } to { scale: .9 1.12; rotate: 3deg; } }
+@keyframes glow { from { opacity: .6; scale: .9; } to { opacity: 1; scale: 1.1; } }
+
+/* ── fairy lights ── */
+.fairy-lights { position: absolute; overflow: visible; pointer-events: none; }
+.fairy-lights path { fill: none; stroke: #8a6a40; stroke-width: .3; vector-effect: non-scaling-stroke; }
+.fairy-lights circle { fill: #fff2b8; filter: drop-shadow(0 0 1.2px #ffd36a) drop-shadow(0 0 3px #ffc04d); animation: twinkle-bulb 1.7s ease-in-out infinite alternate; }
+@keyframes twinkle-bulb { from { opacity: .35; } to { opacity: 1; } }
+
+/* ── hanging lantern ── */
+.hanging-lantern { position: absolute; top: 0; width: 7cqw; height: calc(var(--chain) + 13cqw); transform-origin: 50% 0; animation: lantern-swing 3.4s ease-in-out infinite alternate; pointer-events: none; }
+.lantern-chain { position: absolute; left: 50%; top: 0; width: 1px; height: var(--chain); background: repeating-linear-gradient(180deg, #c99a4b 0 3px, transparent 3px 5px); }
+.lantern-cap { position: absolute; left: 1cqw; right: 1cqw; top: var(--chain); height: 2.4cqw; border-radius: 50% 50% 10% 10%; background: linear-gradient(180deg, #f3d899, #a87830); }
+.lantern-body { position: absolute; left: 0; right: 0; top: calc(var(--chain) + 2cqw); height: 8cqw; border-radius: 30% 30% 40% 40%; background: radial-gradient(ellipse at 50% 55%, #fff6cf, #ffc860 40%, #c0702a 80%); box-shadow: 0 0 5cqw #ffb84d99, inset 0 0 0 .5cqw #a87830; animation: glow 2.2s ease-in-out infinite alternate; }
+.lantern-tassel { position: absolute; left: 50%; top: calc(var(--chain) + 10cqw); width: 1.2cqw; height: 3cqw; margin-left: -.6cqw; border-radius: 0 0 50% 50%; background: linear-gradient(180deg, #a63f5b, #6e1530); }
+@keyframes lantern-swing { from { rotate: -6deg; } to { rotate: 6deg; } }
+
+/* ── sparkles ── */
+.sparkles { position: absolute; inset: 0; pointer-events: none; }
+.sparkles i { position: absolute; font-style: normal; color: #ffe39a; font-size: calc(3cqw * var(--s)); text-shadow: 0 0 2cqw #ffd36a; opacity: 0; animation: sparkle 3s ease-in-out infinite; }
+@keyframes sparkle { 0%, 100% { opacity: 0; scale: .3; rotate: 0deg; } 50% { opacity: 1; scale: 1; rotate: 90deg; } }
+
+/* ── birds ── */
+.birds { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.birds i { position: absolute; left: 0; top: var(--y); width: calc(5cqw - var(--i) * .5cqw); animation: bird-fly 14s linear infinite; animation-delay: calc(var(--i) * -1.2s); }
+.birds svg { display: block; width: 100%; overflow: visible; animation: flap .5s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -.13s); }
+.birds path { fill: none; stroke: #4a2f2f; stroke-width: 1.4; stroke-linecap: round; }
+@keyframes bird-fly { from { translate: -12cqw 6cqw; } to { translate: 112cqw -8cqw; } }
+@keyframes flap { from { scale: 1 1; } to { scale: 1 -.6; } }
+
+/* ── butterflies ── */
+.butterflies { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 6; }
+.butterfly { position: absolute; left: 0; top: 0; width: 5cqw; height: 4cqw; offset-path: path('M -40 520 C 120 380, 60 260, 220 220 S 420 120, 480 -40'); offset-rotate: auto 90deg; animation: butterfly-path 22s linear infinite; animation-delay: calc(var(--i) * -7.5s); }
+.butterfly:nth-child(2) { offset-path: path('M 460 640 C 300 560, 380 420, 220 380 S -20 260, -60 120'); }
+.butterfly:nth-child(3) { offset-path: path('M -40 200 C 140 260, 120 420, 260 460 S 420 620, 480 700'); }
+.wing { position: absolute; top: 0; width: 50%; height: 100%; background: radial-gradient(circle at 70% 40%, #fff6 0 12%, transparent 13%), var(--c); border-radius: 70% 30% 60% 40%; opacity: .9; animation: wing .22s ease-in-out infinite alternate; }
+.wing-l { left: 0; transform-origin: 100% 50%; }
+.wing-r { right: 0; transform-origin: 0 50%; border-radius: 30% 70% 40% 60%; }
+@keyframes wing { from { scale: 1 1; } to { scale: .25 1; } }
+@keyframes butterfly-path { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+
+@media (prefers-reduced-motion: reduce) { .birds, .butterflies, .sparkles { display: none; } }

@@ -1,0 +1,10 @@
+/* ════════════════════════ couple: on the same cream paper as the opening and the scroll ════════════════════════ */
+
+.couple-block {
+  padding: 12cqw 0 16cqw;
+  text-align: center;
+  background:
+    url('/art/paper-cream.webp') center / cover,
+    var(--paper);
+}
+.couple-block .profiles { margin-top: 2cqw; }

@@ -1,0 +1,14 @@
+/* ════════════════════════ welcome: words rise out of a blur ════════════════════════ */
+
+.welcome { text-align: center; translate: none !important; opacity: 1 !important; }
+.welcome-om { color: var(--brass); font-size: 7cqw; }
+.welcome-dear { color: var(--rose); font-size: 10cqw; margin: 1cqw 0 3cqw; clip-path: inset(-20% 100% -20% 0); transition: clip-path 1.6s cubic-bezier(.6, 0, .3, 1); }
+.welcome.is-in .welcome-dear { clip-path: inset(-20% -5% -20% 0); }
+.welcome-text { font-size: 4.3cqw; line-height: 1.6; color: var(--ink-soft); }
+.welcome-hint { margin-top: 4cqw; font-size: 2.8cqw; letter-spacing: .26em; text-transform: uppercase; color: var(--brass-deep); }
+.blur-word { display: inline-block; opacity: 0; filter: blur(5px); translate: 0 .5em; transition: opacity .9s, filter .9s, translate .9s cubic-bezier(.22, 1, .36, 1); transition-delay: var(--d); }
+.welcome.is-in .blur-word { opacity: 1; filter: none; translate: none; }
+.welcome { position: relative; margin: 4cqw 7cqw 0; padding: 9cqw 7cqw 8cqw; border-radius: 3cqw; background: linear-gradient(180deg, #fffdf9ee, #fcf1e6ee); box-shadow: 0 3cqw 6cqw #4a1f2e1f, inset 0 0 0 1px #ead3ad, inset 0 0 0 2cqw #fffdf9, inset 0 0 0 calc(2cqw + 1px) #e2c58f; }
+.welcome-frame { position: absolute; width: 30cqw; right: -5cqw; bottom: -6cqw; pointer-events: none; opacity: 0; scale: .7; transform-origin: 80% 80%; transition: opacity 1s .6s, scale 1.2s cubic-bezier(.3, 1.4, .5, 1) .6s; }
+.welcome-frame.mirror { right: auto; left: -5cqw; top: -6cqw; bottom: auto; rotate: 180deg; transform-origin: 20% 20%; }
+.welcome.is-in .welcome-frame { opacity: 1; scale: 1; }

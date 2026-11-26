@@ -1,0 +1,93 @@
+/* ════════════════════════ moments: the postcard pile the cube settles into ════════════════════════ */
+
+.moments-deck { width: 100%; }
+.deck {
+  --deck-card-height: min(calc(58cqw * 4 / 3), var(--deck-card-max-height, 100cqw));
+  --deck-card-width: calc(var(--deck-card-height) * 3 / 4);
+  --deck-gutter: 4cqw;
+  position: relative;
+  height: calc(var(--deck-card-height) + 2 * var(--deck-gutter));
+}
+
+/* Each portrait photo sits in a rounded gold frame. */
+.deck-card {
+  position: absolute;
+  left: 50%;
+  top: var(--deck-gutter);
+  width: var(--deck-card-width);
+  height: var(--deck-card-height);
+  margin: 0 0 0 calc(var(--deck-card-width) / -2);
+  padding: 1.75cqw;
+  border-radius: 3cqw;
+  background: linear-gradient(145deg, #f6deaa, #c99645 55%, #f3d899);
+  box-shadow: 0 2.8cqw 5.6cqw #4a1f2e33, 0 .6cqw 1.2cqw #4a1f2e24;
+  translate: var(--x, 0) var(--y, 0);
+  rotate: var(--r, 0deg);
+  scale: var(--s, 1);
+  transition: translate .42s cubic-bezier(.22, 1, .36, 1), rotate .42s cubic-bezier(.22, 1, .36, 1), scale .42s, opacity .42s;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.deck-card.is-top { cursor: grab; }
+.deck-card.is-held { transition: none; cursor: grabbing; }
+.deck-photo { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1.6cqw; background: #f6e7cc; pointer-events: none; }
+/* a soft shine passes over the top photo now and then */
+.deck-card.is-top::after {
+  content: '';
+  position: absolute;
+  inset: 1.75cqw;
+  border-radius: 1.6cqw;
+  background: linear-gradient(110deg, transparent 35%, #fff8e855 50%, transparent 65%) 200% 0 / 250% 100% no-repeat;
+  animation: deck-glint 5s ease-in-out 1.5s infinite;
+  pointer-events: none;
+}
+@keyframes deck-glint { 0%, 70% { background-position: 200% 0; } 100% { background-position: -100% 0; } }
+
+/* the top photo's number and caption, under the pile */
+.deck-caption { display: grid; justify-items: center; gap: .8cqw; margin: 3cqw 0 4cqw; animation: caption-in .5s ease both; }
+@keyframes caption-in { from { opacity: 0; translate: 0 1.6cqw; } }
+.deck-count { display: inline-flex; align-items: center; justify-content: center; gap: 1.6cqw; font-size: 2.6cqw; font-weight: 600; letter-spacing: .22em; color: var(--brass-deep); }
+.deck-count i { width: 5cqw; height: 1px; background: #c99a4e; }
+.deck-caption b { color: var(--rose); font-size: 7cqw; font-weight: 400; line-height: 1.15; }
+
+/* the swipe hint: until the first swipe, the top card leans aside now and then and a hand shows the move */
+.deck-hint {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  justify-items: center;
+  gap: .6cqw;
+  padding: 2.2cqw 3.4cqw 1.6cqw;
+  border-radius: 3cqw;
+  translate: -50% -50%;
+  background: #7f2742d9;
+  color: #fff4e3;
+  font-size: 2.4cqw;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  box-shadow: 0 1.4cqw 3cqw #4a1f2e40;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s;
+}
+.deck-hint svg { width: 8cqw; height: 8cqw; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.is-hinting .deck-hint { opacity: 1; animation: hint-fade 4.2s ease-in-out 1s infinite; }
+.is-hinting .deck-hint svg { animation: hint-swipe 4.2s ease-in-out 1s infinite; }
+.is-hinting .deck-card.is-top:not(.is-held) { animation: deck-peek 4.2s ease-in-out 1s infinite; }
+@keyframes hint-swipe { 0%, 15% { translate: 4cqw 0; } 45% { translate: -5cqw 0; } 60%, 100% { translate: 4cqw 0; } }
+@keyframes hint-fade { 0%, 70% { opacity: 1; } 85%, 100% { opacity: 0; } }
+@keyframes deck-peek { 0%, 20% { translate: 0 0; rotate: 0deg; } 45% { translate: -9cqw 0; rotate: -5deg; } 65%, 100% { translate: 0 0; rotate: 0deg; } }
+
+/* arrows and the dots under the pile */
+.moments-nav { display: flex; justify-content: center; align-items: center; gap: 5cqw; }
+.moments-dots { display: flex; gap: 1.6cqw; }
+.moments-dots i { width: 1.8cqw; aspect-ratio: 1; border-radius: 50%; background: #e7d3bb; transition: background .3s, scale .3s; }
+.moments-dots i.is-on { background: var(--rose); scale: 1.3; }
+.moments-tip { margin-top: 3cqw; font-size: 2.6cqw; letter-spacing: .06em; color: var(--ink-soft); font-style: italic; }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-hinting .deck-card.is-top, .is-hinting .deck-hint svg { animation: none; }
+}

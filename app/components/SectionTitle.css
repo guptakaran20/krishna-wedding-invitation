@@ -1,0 +1,12 @@
+/* section heading: eyebrow, script title, and the lotus divider that opens out from its centre */
+.section-title { text-align: center; margin-bottom: 6cqw; }
+.eyebrow { font-size: max(10px, 2.8cqw); font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--brass-deep); }
+.section-title h2 { color: var(--rose); font-size: 13cqw; line-height: 1.15; margin-top: 1cqw; }
+.title-divider {
+  display: block;
+  width: 46cqw;
+  margin: .6cqw auto 0;
+  clip-path: inset(0 50% 0 50%);
+  transition: clip-path 1.3s cubic-bezier(.6, 0, .3, 1) .35s;
+}
+.section-title.is-in .title-divider { clip-path: inset(0 0 0 0); }

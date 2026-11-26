@@ -1,0 +1,131 @@
+/* ════════════════════════ Our Families: two family cards, and a family tree that unfolds ════════════════════════ */
+
+.families-block { padding: 7cqw 6cqw 5.5cqw; text-align: center; }
+.families-block .section-title { margin-bottom: 4cqw; }
+.families-intro { max-width: 70cqw; margin: 0 auto 5cqw; font-size: max(13px, 3.5cqw); font-style: italic; line-height: 1.45; color: var(--ink-soft); text-wrap: balance; }
+.families-grid { display: grid; gap: 6cqw; max-width: 82cqw; margin-inline: auto; }
+
+.family-card {
+  min-width: 0;
+  padding: 11cqw 7.5cqw 8.5cqw;
+  border-radius: 2cqw;
+  background: #f9ecd4 url('/art/family-stationery.webp') center / 100% 100% no-repeat;
+  box-shadow: inset 0 0 0 1px #b98b3e66, 0 2cqw 5cqw #6a2a3a26;
+}
+.family-heading { margin-bottom: 2.8cqw; }
+.family-eyebrow { font-size: max(10px, 2.2cqw); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--brass-deep); text-wrap: balance; }
+.family-person { margin-top: 1.5cqw; color: var(--rose); font-size: 10cqw; line-height: 1.06; font-weight: 400; }
+.family-portrait {
+  padding: .65cqw;
+  border-radius: 2cqw;
+  background: linear-gradient(145deg, #f4d693, #b87f3e 54%, #f7dfa3);
+  box-shadow: 0 .8cqw 2.2cqw #5a3a1a33;
+}
+.family-portrait img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 30%; border-radius: 1.5cqw; }
+.family-body { display: grid; justify-items: center; gap: 2.7cqw; margin-top: 3cqw; }
+.family-line { display: grid; justify-items: center; gap: 1cqw; }
+.family-rel { font-size: max(12px, 3.05cqw); line-height: 1.2; font-style: italic; color: var(--ink-soft); }
+.family-parents { display: grid; gap: .45cqw; font-size: max(14px, 3.55cqw); line-height: 1.28; color: var(--ink); overflow-wrap: anywhere; }
+.family-parents i { margin-inline-end: .13em; font-family: var(--script); color: var(--brass-deep); }
+.family-tree-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6cqw;
+  min-height: 44px;
+  padding: 0 4cqw;
+  border: 1px solid #bb8847;
+  border-radius: 99px;
+  color: #fff1da;
+  background: #78334b;
+  box-shadow: inset 0 0 0 2px #f1c87844, 0 .5cqw 1.4cqw #8d2f4b33;
+  font: 600 clamp(10px, 2.6cqw, 15px)/1 var(--serif);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.family-tree-button svg { width: 1.4em; height: 1.4em; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.family-tree-button:active { transform: scale(.97); }
+
+/* ── the tree, a sheet over the invitation ── */
+.tree-sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  align-items: end;
+  background: #2e1220b3;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  animation: tree-fade .35s ease both;
+}
+@keyframes tree-fade { from { opacity: 0; } }
+.tree-paper {
+  position: relative;
+  max-height: 92%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 9cqw 6cqw 12cqw;
+  border-radius: 6cqw 6cqw 0 0;
+  text-align: center;
+  background: url('/art/paper-cream.webp') center / cover, #fbecd2;
+  box-shadow: 0 -2cqw 6cqw #1a060e55, inset 0 0 0 1px #c99a4e;
+  animation: tree-rise .55s cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes tree-rise { from { translate: 0 60%; } }
+.tree-close {
+  position: absolute;
+  top: 3.6cqw;
+  right: 3.6cqw;
+  display: grid;
+  place-items: center;
+  width: max(32px, 8.6cqw);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #fff4e3;
+  background: linear-gradient(180deg, #a8445f, #7f2742);
+  box-shadow: inset 0 0 0 1px #6e1f38, inset 0 0 0 3px #e9c27a99;
+  cursor: pointer;
+}
+.tree-close svg { width: 46%; height: 46%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.tree-eyebrow { font-size: 2.4cqw; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--brass-deep); }
+.tree-paper h3 { margin-top: 1cqw; color: var(--rose); font-size: 10cqw; font-weight: 400; line-height: 1.1; }
+.tree-rule { display: block; width: 36cqw; margin: 2cqw auto 5cqw; }
+
+/* each generation rises in turn; the vines between them draw down */
+.tree-gen { animation: tree-gen-in .7s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(.35s + var(--g) * .55s); }
+@keyframes tree-gen-in { from { opacity: 0; translate: 0 5cqw; } }
+.tree-gen h4 { margin: 0 0 3cqw; font-size: 2.4cqw; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--brass-deep); }
+.tree-pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqw; }
+.tree-side { margin-bottom: 2cqw; font-size: 2.6cqw; font-style: italic; color: var(--ink-soft); }
+.tree-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 3cqw 5cqw; margin: 0; padding: 0; list-style: none; }
+.tree-pairs .tree-row { gap: 3cqw; }
+.tree-person { display: grid; justify-items: center; gap: .8cqw; width: 19cqw; }
+.tree-medal {
+  display: grid;
+  place-items: center;
+  width: 13cqw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  font: 400 6cqw/1 var(--script);
+  color: #fff4e3;
+  background: radial-gradient(circle at 35% 30%, #c45f79, #8d2f4b 70%);
+  box-shadow: inset 0 0 0 .7cqw #f3d899, inset 0 0 0 1cqw #b98b3e, 0 1cqw 2cqw #4a1f2e33;
+}
+.tree-person.is-focus .tree-medal { width: 16cqw; font-size: 7.4cqw; box-shadow: inset 0 0 0 .8cqw #f3d899, inset 0 0 0 1.2cqw #b98b3e, 0 0 0 1.2cqw #f6deaa66, 0 1.2cqw 2.4cqw #4a1f2e40; }
+.tree-person.is-unknown .tree-medal { color: var(--brass-deep); background: radial-gradient(circle at 35% 30%, #fffaf0, #f1dfc0); }
+.tree-name { font-size: 2.8cqw; line-height: 1.3; color: var(--ink); text-wrap: balance; }
+.tree-person.is-unknown .tree-name { font-style: italic; color: var(--ink-soft); }
+.tree-role { font-size: 2.2cqw; letter-spacing: .16em; text-transform: uppercase; color: var(--brass-deep); }
+.tree-vine { display: block; width: 10cqw; height: 15cqw; margin: 2cqw auto; overflow: visible; }
+.tree-vine path { fill: none; stroke: #b98b3e; stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 80; stroke-dashoffset: 80; animation: vine-draw .8s ease both; }
+.tree-vine .tree-leaf { fill: #8fa87a; stroke: #6f8a5a; stroke-width: .6; }
+.tree-vine:nth-of-type(1) path { animation-delay: .7s; }
+.tree-vine:nth-of-type(2) path { animation-delay: 1.25s; }
+@keyframes vine-draw { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-gen, .tree-paper, .tree-sheet { animation: none; }
+  .tree-vine path { animation: none; stroke-dashoffset: 0; }
+}

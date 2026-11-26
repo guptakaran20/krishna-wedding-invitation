@@ -1,0 +1,107 @@
+/* the full photo in its carved arch frame, and the round arrow buttons, shared by the photo sections */
+
+.moments-arrow {
+  display: grid;
+  place-items: center;
+  width: max(36px, 10cqw);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--rose);
+  background: linear-gradient(180deg, #fffaf0, #fbefd6);
+  box-shadow: inset 0 0 0 1px #c99a4e, inset 0 0 0 3px #fffaf0, inset 0 0 0 3.6px #e3c58a, 0 1cqw 2.4cqw #8d2f4b1f;
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+.moments-arrow svg { width: 52%; height: 52%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.moments-arrow:active { transform: scale(.94); }
+
+/* ── the full photo, framed over the invitation ── */
+.viewer {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: safe center;
+  container-type: size;
+  padding: 12cqw 4cqw;
+  overflow: hidden auto;
+  /* deep plum, with a warm lamp-glow behind the frame */
+  background: radial-gradient(ellipse 70% 45% at 50% 42%, #f3c97a40, transparent 70%), #2e1220d9;
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  animation: viewer-in .35s ease both;
+}
+.viewer-frame {
+  width: 100%;
+  text-align: center;
+  animation: viewer-frame-in .5s cubic-bezier(.22, 1, .36, 1) both;
+}
+.viewer-stage {
+  position: relative;
+  /* Reserve height for the caption and navigation on shorter screens. */
+  width: clamp(min(100%, 120px), calc((100cqh - 32cqw) * 3 / 4), 100%);
+  margin-inline: auto;
+}
+/* the photo sits in the arch's window, under the carving */
+.viewer-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  touch-action: pan-y;
+  translate: var(--drag, 0) 0;
+  user-select: none;
+  -webkit-user-select: none;
+  filter: drop-shadow(0 3cqw 5cqw #12040acc);
+}
+.viewer-picture {
+  position: absolute;
+  inset: 12% 9.5% 10% 9.5%;
+  width: 81%;
+  height: 78%;
+  object-fit: cover;
+  background: #f6e7cc;
+  animation: viewer-photo-in .45s ease both;
+  pointer-events: none;
+}
+.viewer-carving { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.viewer-count { margin-top: 3cqw; color: #e9c27a; }
+.viewer-count i { background: #e9c27a; }
+.viewer-caption { margin-top: .4cqw; color: #fff1dc; font-size: 8cqw; line-height: 1.15; text-shadow: 0 .4cqw 1.6cqw #12040a99; }
+.viewer-nav { display: flex; justify-content: center; align-items: center; gap: 4cqw; margin-top: 3.4cqw; }
+.viewer-nav span { font-size: 2.5cqw; letter-spacing: .2em; text-transform: uppercase; color: #e9c27acc; }
+.viewer-close {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: max(34px, 9cqw);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #fff4e3;
+  background: linear-gradient(180deg, #a8445f, #7f2742);
+  box-shadow: inset 0 0 0 1px #6e1f38, inset 0 0 0 3.2px #e9c27a99, 0 1cqw 2.4cqw #1a060e55;
+  cursor: pointer;
+}
+.viewer-close svg { width: 46%; height: 46%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+@keyframes viewer-in { from { opacity: 0; } }
+@keyframes viewer-frame-in { from { opacity: 0; scale: .9; translate: 0 4cqw; } }
+@keyframes viewer-photo-in { from { opacity: 0; scale: 1.04; } }
+
+
+.viewer-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6cqw;
+  font-size: 2.6cqw;
+  font-weight: 600;
+  letter-spacing: .22em;
+  color: var(--brass-deep);
+}
+.viewer-count i { width: 5cqw; height: 1px; background: #c99a4e; }

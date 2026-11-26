@@ -1,0 +1,94 @@
+/* ════════════════════════ Moments Together: cube → band → wall ════════════════════════ */
+
+.cube-run {
+  --moments-top: max(8cqw, calc(var(--camera-clearance) + 2cqw));
+  --moments-height: clamp(calc(126cqw + var(--moments-top)), var(--sh, 100dvh), calc(162cqw + var(--moments-top)));
+  position: relative;
+  height: calc(var(--moments-height) + 10cqw);
+}
+.cube-sticky {
+  position: sticky;
+  top: 0;
+  height: var(--moments-height);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: var(--moments-top) 0 3cqw;
+  overflow: clip;
+  text-align: center;
+}
+.cube-sticky .section-title { margin-bottom: 0; }
+.cube-stage { position: relative; container-type: size; perspective: 210cqw; perspective-origin: 50% 40%; }
+.cube { position: absolute; left: 50%; top: 50%; width: 0; height: 0; margin: 0; padding: 0; list-style: none; transform-style: preserve-3d; }
+
+/* a tile: ivory card, gold rim, the photo inside */
+.cube-tile, .cube-lid {
+  --t: 23cqw;
+  --tile-height: var(--t);
+  position: absolute;
+  left: calc(var(--t) / -2);
+  top: calc(var(--tile-height) / -2);
+  width: var(--t);
+  height: var(--tile-height);
+  padding: .7cqw;
+  border-radius: 1.2cqw;
+  background: linear-gradient(145deg, #f6deaa, #c99645 55%, #f3d899);
+  box-shadow: 0 1.2cqw 2.4cqw #4a1f2e33;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+.cube-tile { --tile-height: var(--pile-tile-height, var(--t)); }
+.cube-tile::after { content: ''; position: absolute; inset: .7cqw; border-radius: .7cqw; background: #2a0f18; opacity: var(--shade, 0); pointer-events: none; }
+.cube-photo { display: block; width: 100%; height: 100%; border-radius: .7cqw; overflow: hidden; background: #f6e7cc; }
+.cube-photo img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+/* the postcard pile the tiles gather into: it fades in where they land */
+.cube-deck {
+  /* Reserve room below the stack for its caption and controls. */
+  --deck-card-max-height: calc(100cqh - 46cqw);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  translate: 0 -50%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .6s ease, visibility 0s .6s;
+}
+.is-deck .cube-deck { opacity: 1; visibility: visible; transition: opacity .6s ease; }
+.cube { transition: opacity .4s ease; }
+
+/* the ornament tiles */
+.cube-deco {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: .7cqw;
+  background: radial-gradient(circle at 50% 40%, #fffaf0, #f6e4c4);
+  color: var(--rose);
+  box-shadow: inset 0 0 0 .5cqw #fffaf0, inset 0 0 0 .62cqw #c99a4e;
+}
+.cube-deco b { font-size: 9cqw; font-weight: 400; line-height: 1; }
+.cube-deco b i { margin: 0 .5cqw; font-size: .6em; color: var(--brass); }
+.cube-date b { font-family: var(--serif); font-size: 7.4cqw; font-weight: 600; letter-spacing: .04em; }
+.cube-date i { font-size: 4.6cqw; line-height: 1; }
+.cube-date small { margin-top: .6cqw; font-size: 2.2cqw; letter-spacing: .24em; color: var(--brass-deep); }
+.cube-deco img { width: 70%; }
+.cube-lotus img { width: 88%; }
+.cube-lotus i { margin-top: .8cqw; font-size: 3.4cqw; }
+
+.cube-hint { font-size: 2.5cqw; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--brass-deep); animation: hint-pulse 1.8s ease-in-out infinite; transition: opacity .4s; }
+.is-deck .cube-hint { opacity: 0; animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cube-run { height: auto; }
+  .cube-sticky { position: relative; height: auto; grid-template-rows: auto auto; }
+  .cube-stage { container-type: normal; }
+  .cube-deck { --deck-card-max-height: initial; position: relative; top: auto; translate: none; }
+  .cube, .cube-hint { display: none; }
+}
+
+.cube-tile { cursor: pointer; }
+.is-deck .cube-tile { cursor: auto; }

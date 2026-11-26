@@ -1,0 +1,189 @@
+.venue-block {
+  --venue-top: 0px;
+  --venue-action-height: max(40px, 10.4cqw);
+  --venue-action-gap: 2.6cqw;
+  --venue-action-margin: 6cqw;
+  --venue-actions-space: calc(var(--venue-action-height) + var(--venue-action-margin));
+  padding: var(--venue-top) 0 12cqw;
+  text-align: center;
+}
+
+
+@media (min-width: 601px), (orientation: landscape) {
+  .venue-block { --venue-top: 8cqw; }
+}
+
+.venue-entrance {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  max-height: max(110cqw, calc(var(--sh, 100dvh) - var(--venue-top) - var(--venue-actions-space) - var(--scroll-end-clearance)));
+  overflow: clip;
+}
+
+.venue-mandap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  mask-image: linear-gradient(180deg, transparent, #000 8%);
+}
+.venue-walk {
+  position: absolute;
+  z-index: 1;
+  inset: auto 27% 18%;
+  height: 35%;
+  transform-origin: 50% 100%;
+}
+.venue-walk::before {
+  position: absolute;
+  inset: auto 6% 1.7%;
+  height: 6%;
+  background: radial-gradient(ellipse, #71462150, transparent 70%);
+  opacity: 0;
+  content: '';
+}
+.venue-block.is-in .venue-walk::before { animation: venue-detail-in .8s 1.22s both; }
+.venue-couple {
+  position: absolute;
+  inset: 0;
+}
+.venue-block.is-in .venue-walk { animation: venue-walk-forward 4.45s .2s cubic-bezier(.33, .08, .35, 1) both; }
+.venue-block.is-in .venue-couple { animation: venue-walk-step .72s .5s ease-in-out 5 both; }
+@keyframes venue-walk-forward {
+  from { transform: translateY(67%) scale(1.52); }
+  to { transform: none; }
+}
+@keyframes venue-walk-step {
+  0%, 50%, 100% { translate: 0 0; }
+  25% { translate: -.7% -.65%; }
+  75% { translate: .7% -.65%; }
+}
+.venue-brush {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  clip-path: inset(var(--stroke-top) 0 var(--stroke-bottom) 0);
+  opacity: 0;
+}
+.venue-block.is-in .venue-brush { animation: venue-brush-left .9s calc(.18s + var(--stroke) * .11s) ease-out both; }
+.venue-block.is-in .venue-brush:nth-child(even) { animation-name: venue-brush-right; }
+
+@keyframes venue-brush-left {
+  from { clip-path: inset(var(--stroke-top) 100% var(--stroke-bottom) 0); opacity: 0; }
+  48% { opacity: 1; }
+  to { clip-path: inset(var(--stroke-top) 0 var(--stroke-bottom) 0); opacity: 1; }
+}
+@keyframes venue-brush-right {
+  from { clip-path: inset(var(--stroke-top) 0 var(--stroke-bottom) 100%); opacity: 0; }
+  48% { opacity: 1; }
+  to { clip-path: inset(var(--stroke-top) 0 var(--stroke-bottom) 0); opacity: 1; }
+}
+
+.venue-entrance::after {
+  position: absolute;
+  z-index: 6;
+  inset: auto 0 0;
+  height: 5%;
+  background: linear-gradient(180deg, transparent, var(--paper));
+  pointer-events: none;
+  content: '';
+}
+
+.venue-entrance-copy {
+  position: absolute;
+  z-index: 3;
+  top: 4%;
+  inset-inline: 8%;
+}
+.venue-kicker {
+  color: var(--brass-deep);
+  font: 600 clamp(12px, 3.9cqw, 22px)/1.2 var(--serif);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.venue-rule { display: block; width: 34cqw; height: 1px; margin: 1.8cqw auto 1.15cqw; background: #b38336a6; }
+.venue-rule-lower { margin: 1.2cqw auto 1.5cqw; }
+.venue-name {
+  padding-inline: .15em;
+  color: var(--rose);
+  font-size: clamp(28px, 10.3cqw, 64px);
+  line-height: 1.08;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.venue-entrance-copy address {
+  font: normal clamp(13px, 3.65cqw, 22px)/1.35 var(--serif);
+  color: var(--ink);
+}
+.venue-entrance-copy address span { display: block; }
+.venue-kicker, .venue-rule, .venue-name, .venue-entrance-copy address span { opacity: 0; }
+.venue-block.is-in .venue-kicker { animation: venue-detail-in .7s .86s both; }
+.venue-block.is-in .venue-rule { animation: venue-rule-in .53s 1.18s both; }
+.venue-block.is-in .venue-rule-lower { animation-delay: 2.6s; }
+.venue-block.is-in .venue-name { animation: venue-title-write 1.16s 1.42s ease-out both; }
+.venue-block.is-in .venue-entrance-copy address span { animation: venue-detail-in .62s calc(2.85s + var(--line) * .16s) both; }
+
+@keyframes venue-title-write {
+  from { clip-path: inset(-.26em 100% -.26em -.26em); opacity: 0; }
+  25% { opacity: 1; }
+  to { clip-path: inset(-.26em -.26em -.26em -.26em); opacity: 1; }
+}
+@keyframes venue-detail-in { from { opacity: 0; translate: 0 .3em; } to { opacity: 1; translate: none; } }
+@keyframes venue-rule-in { from { opacity: 0; scale: 0 1; } to { opacity: 1; scale: 1 1; } }
+
+.venue-card {
+  position: relative;
+  width: 82cqw;
+  margin: 0 auto;
+}
+
+.venue-actions { display: flex; justify-content: center; gap: var(--venue-action-gap); margin-top: var(--venue-action-margin); }
+.venue-button {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6cqw;
+  min-height: var(--venue-action-height);
+  padding: 0 3cqw;
+  border: 0;
+  border-radius: 99px;
+  font: 600 clamp(10px, 2.75cqw, 16px)/1 var(--serif);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  /* ivory paper, a gold rim and a fine inner keyline, as on the event buttons */
+  color: var(--rose);
+  background: linear-gradient(180deg, #fffaf0, #fbefd6);
+  box-shadow: inset 0 0 0 1px #c99a4e, inset 0 0 0 3.5px #fffaf0, inset 0 0 0 4.2px #e3c58a, 0 1.2cqw 2.8cqw #8d2f4b1f;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.venue-button svg { width: 1.35em; height: 1.35em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.venue-directions {
+  color: #fff4e3;
+  background: linear-gradient(180deg, #a8445f, #7f2742);
+  box-shadow: inset 0 0 0 1px #6e1f38, inset 0 0 0 4.2px #e9c27a99, 0 1.4cqw 3cqw #7f274240;
+}
+.venue-button:hover { transform: translateY(-1px); }
+.venue-button:active { transform: scale(.97); }
+.venue-copy-status {
+  margin-top: 1.4cqw;
+  color: var(--ink-soft);
+  font-size: max(12px, 3.2cqw);
+  line-height: 1.4;
+}
+.venue-copy-status:empty { margin: 0; }
+@media (prefers-reduced-motion: reduce), (scripting: none) {
+  .venue-block .venue-entrance :is(.venue-walk, .venue-couple, .venue-brush, .venue-kicker, .venue-rule, .venue-name, address span),
+  .venue-block.is-in .venue-walk::before {
+    animation: none;
+    opacity: 1;
+  }
+}

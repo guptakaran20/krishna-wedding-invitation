@@ -1,0 +1,82 @@
+/* ════════════════════════ Thank you: the line written in, then the wedding car parks ════════════════════════ */
+
+.finale { position: relative; padding: 18cqw 6cqw 14cqw; text-align: center; overflow: clip; }
+
+.finale-flowers { display: flex; justify-content: center; align-items: flex-end; gap: 2cqw; height: 22cqw; margin-bottom: 4cqw; opacity: 0; translate: 0 4cqw; transition: opacity 1s ease, translate 1s cubic-bezier(.22, 1, .36, 1); }
+.is-writing .finale-flowers { opacity: 1; translate: none; }
+.finale-fl { height: 100%; animation: fl-sway 5s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+.finale-fl-left { scale: -1 1; animation-delay: -1.6s; }
+.finale-fl-centre { height: 60%; align-self: center; animation-duration: 3.6s; }
+@keyframes fl-sway { from { rotate: -3deg; } to { rotate: 3deg; } }
+
+/* each line is written in, left to right, as if by hand */
+.finale-line { display: grid; gap: 1cqw; max-width: 80cqw; margin: 0 auto; color: var(--rose); font-size: 10.4cqw; font-weight: 400; line-height: 1.15; text-wrap: balance; }
+.hw { display: block; clip-path: inset(-.3em 100% -.3em -.2em); transition: clip-path 1.9s cubic-bezier(.55, .1, .35, 1); transition-delay: calc(.4s + var(--i) * 1.6s); }
+.is-writing .hw { clip-path: inset(-.3em -.2em -.3em -.2em); }
+
+.finale-rule, .finale-names, .finale-date, .finale-families, .finale-hashtag, .finale-signoff { opacity: 0; translate: 0 3cqw; transition: opacity .9s ease, translate .9s cubic-bezier(.22, 1, .36, 1); }
+.is-writing :is(.finale-rule, .finale-names, .finale-date, .finale-families, .finale-hashtag, .finale-signoff) { opacity: 1; translate: none; }
+.finale-rule { display: block; width: 40cqw; margin: 5cqw auto 3cqw; transition-delay: 3.6s; }
+.finale-names { color: var(--rose); font-size: 9cqw; line-height: 1.15; transition-delay: 3.9s; }
+.finale-names i { margin: 0 1.2cqw; color: var(--brass); font-size: .8em; }
+.finale-date { margin-top: 2cqw; font-size: 3cqw; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--brass-deep); transition-delay: 4.1s; }
+.finale-families { margin-top: 2.4cqw; font-size: 2.6cqw; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); transition-delay: 4.3s; }
+.finale-hashtag { margin-top: 3cqw; font-size: 3cqw; font-weight: 600; letter-spacing: .12em; color: var(--rose); transition-delay: 4.5s; }
+.finale-signoff { margin-top: 2cqw; font-size: 2.6cqw; font-style: italic; color: var(--ink-soft); transition-delay: 4.7s; }
+
+/* ── the parking place: the monogram on the right, the car parks on the left ── */
+.parking { position: relative; height: 96cqw; margin-top: 8cqw; }
+.parking-mark { position: absolute; right: 1cqw; top: 22cqw; display: grid; justify-items: center; width: 36cqw; opacity: 0; transition: opacity 1s ease 2.6s; }
+.is-arriving .parking-mark { opacity: 1; }
+.parking-spray { width: 26cqw; animation: fl-sway 5s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+.parking-mono { margin-top: 1cqw; color: var(--rose); font-size: 13cqw; line-height: 1.1; white-space: nowrap; }
+.parking-mono i { margin: 0 2cqw; color: var(--brass); font-size: .5em; vertical-align: .25em; }
+.parking-caption { margin-top: 2.4cqw; font-size: 2.5cqw; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--brass-deep); }
+
+/* the car: waits below, drives up, swings round and parks at a slant */
+.parking-car { position: absolute; left: 7cqw; top: 2cqw; width: 37cqw; translate: 22cqw 140cqw; rotate: 0deg; will-change: translate, rotate; }
+.parking-car img { display: block; width: 100%; filter: drop-shadow(1.6cqw 3cqw 2.4cqw #4a1f2e47); }
+.is-arriving .parking-car { animation: car-arrive 3.4s cubic-bezier(.45, 0, .2, 1) both; }
+.is-parked .parking-car { translate: 0 0; rotate: -14deg; animation: none; }
+@keyframes car-arrive {
+  0% { translate: 22cqw 140cqw; rotate: 0deg; }
+  55% { translate: 18cqw 14cqw; rotate: 4deg; }
+  80% { translate: 3cqw -2cqw; rotate: -17deg; }
+  100% { translate: 0 0; rotate: -14deg; }
+}
+/* a little sparkle on the paint once it is parked */
+.glint { position: absolute; width: 4cqw; aspect-ratio: 1; background: radial-gradient(circle, #fff 0 18%, #fff8 30%, transparent 62%); opacity: 0; pointer-events: none; }
+.glint::before, .glint::after { content: ''; position: absolute; left: 50%; top: 50%; width: 140%; height: 1.5px; translate: -50% -50%; background: linear-gradient(90deg, transparent, #fff, transparent); }
+.glint::after { rotate: 90deg; }
+.glint-1 { left: 22%; top: 9%; }
+.glint-2 { left: 70%; top: 34%; }
+.glint-3 { left: 30%; top: 80%; }
+.is-parked .glint { animation: glint 2.8s ease-in-out infinite; }
+.is-parked .glint-2 { animation-delay: .9s; }
+.is-parked .glint-3 { animation-delay: 1.8s; }
+@keyframes glint { 0%, 70%, 100% { opacity: 0; scale: .4; } 82% { opacity: 1; scale: 1; } }
+
+.finale-end { margin-top: 2cqw; }
+.finale-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6cqw;
+  min-height: max(38px, 9.6cqw);
+  padding: 0 6cqw;
+  border: 0;
+  border-radius: 99px;
+  color: var(--rose);
+  background: linear-gradient(180deg, #fffaf0, #fbefd6);
+  box-shadow: inset 0 0 0 1px #c99a4e, inset 0 0 0 3px #fffaf0, inset 0 0 0 3.6px #e3c58a, 0 1cqw 2.4cqw #8d2f4b1f;
+  font: 600 clamp(10px, 2.6cqw, 15px)/1 var(--serif);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.finale-top svg { width: 1.3em; height: 1.3em; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hw { clip-path: none; }
+  .parking-car { translate: 0 0; rotate: -14deg; animation: none !important; }
+  .parking-mark { opacity: 1; }
+}

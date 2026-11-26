@@ -1,0 +1,154 @@
+/* the menu button in the corner */
+.sound-toggle {
+  position: absolute;
+  z-index: 30;
+  top: calc(var(--camera-clearance, 0px) + max(3cqw, env(safe-area-inset-top)) + 1cqw);
+  right: 3.5cqw;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 44px;
+  height: 44px;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #b98b3e66;
+  border-radius: 99px;
+  background: #fffaf2e6;
+  box-shadow: 0 1cqw 3cqw #4a2a1a2e;
+  color: #6b4220;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(6px);
+  transition: scale .15s ease-out;
+}
+.sound-toggle:active { scale: .94; }
+.sound-toggle svg, .invite-sidebar svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sound-toggle svg .speaker, .invite-sidebar svg .speaker { fill: currentColor; }
+.sound-toggle .menu-bars { width: 20px; height: 20px; }
+
+/* the sidebar and the dimmed page behind it */
+.sidebar-scrim {
+  position: absolute;
+  z-index: 40;
+  inset: 0;
+  background: #2a141f59;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+.sidebar-scrim.is-open { opacity: 1; pointer-events: auto; }
+
+.invite-sidebar {
+  position: absolute;
+  z-index: 41;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: min(78%, 320px);
+  padding: calc(var(--camera-clearance, 0px) + max(4cqw, env(safe-area-inset-top)) + 2cqw) 20px 24px;
+  border-left: 1px solid #b98b3e66;
+  background: url('/art/paper-cream.webp') center / cover, var(--paper-light);
+  box-shadow: -3cqw 0 8cqw #4a2a1a40;
+  color: #6b4220;
+  overflow-y: auto;
+  transform: translateX(105%);
+  transition: transform .38s cubic-bezier(.32, .72, 0, 1);
+}
+.invite-sidebar.is-open { transform: none; }
+
+.sidebar-head { display: flex; align-items: center; justify-content: space-between; }
+.sidebar-title { color: var(--rose); font-size: 30px; line-height: 1.2; }
+.sidebar-close {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #b98b3e66;
+  border-radius: 50%;
+  background: #fffaf2cc;
+  color: inherit;
+  cursor: pointer;
+}
+.sidebar-rule { width: 70%; margin: -12px auto 0; opacity: .9; }
+
+.sidebar-group { display: grid; gap: 10px; }
+.sidebar-label {
+  color: var(--brass-deep);
+  font: 600 11px/1.2 var(--serif);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.sidebar-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid #b98b3e66;
+  border-radius: 14px;
+  background: #fffaf2cc;
+  color: inherit;
+  font: 600 15px/1 var(--serif);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.sidebar-switch-text { flex: 1; text-align: left; }
+.sidebar-knob {
+  position: relative;
+  width: 44px;
+  height: 26px;
+  border-radius: 99px;
+  background: #d9c7a8;
+  transition: background .2s ease;
+}
+.sidebar-knob i {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px #0003;
+  transition: translate .2s ease;
+}
+.sidebar-switch.is-on .sidebar-knob { background: var(--rose); }
+.sidebar-switch.is-on .sidebar-knob i { translate: 18px 0; }
+
+.sidebar-segment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border: 1px solid #b98b3e66;
+  border-radius: 14px;
+  background: #fffaf2cc;
+}
+.sidebar-segment button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  font: 600 15px/1 var(--serif);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .2s ease, color .2s ease;
+}
+.sidebar-segment button[aria-checked='true'] { background: var(--rose); color: #fff5ef; }
+
+@media (prefers-reduced-motion: reduce) {
+    .invite-sidebar, .sidebar-scrim, .sidebar-knob, .sidebar-knob i { transition: none; }
+}

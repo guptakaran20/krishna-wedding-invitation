@@ -1,0 +1,19 @@
+/* sky lanterns that rise when a guest accepts */
+
+.lanterns { position: absolute; inset: -150cqw -10cqw 0; pointer-events: none; overflow: hidden; }
+.sky-lantern {
+  position: absolute;
+  bottom: 0;
+  width: calc(5cqw * var(--size));
+  aspect-ratio: 3 / 4;
+  border-radius: 40% 40% 20% 20%;
+  background: radial-gradient(ellipse at 50% 80%, #fff6c8, #ffb347 45%, #d0601e);
+  box-shadow: 0 0 4cqw #ffb34799, 0 0 10cqw #ff8a3055;
+  animation: lantern-rise linear both;
+}
+@keyframes lantern-rise {
+  0% { translate: 0 0; opacity: 0; }
+  10% { opacity: 1; }
+  50% { translate: var(--sway) -70cqw; }
+  100% { translate: calc(var(--sway) * -.5) -150cqw; opacity: 0; scale: .5; }
+}

@@ -1,0 +1,107 @@
+@property --save-date-progress {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.save-date { text-align: center; }
+
+.date-scene-wrap {
+  --scene-entrance: 26cqw;
+  --scene-exit: 20cqw;
+  padding-block: var(--scene-entrance) var(--scene-exit);
+  overflow: clip;
+  mask-image: linear-gradient(180deg, transparent, #000 8cqw, #000 calc(100% - 12cqw), transparent);
+}
+
+.date-scene {
+  --car-height: 40.5%;
+  --car-rear: calc(-11% + 88.5% * var(--save-date-progress, 0));
+  --car-front: calc(var(--car-rear) + var(--car-height) - 1%);
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 9 / 16;
+  width: 100%;
+  color: #71364a;
+  text-shadow: 0 1px 1px #fff4dd;
+}
+
+/* the drive itself is played from SaveTheDate.jsx, which sets --save-date-progress and moves the page with the car */
+.date-scene[data-phase='finished'] { --save-date-progress: 1; }
+
+.date-scene__garden {
+  position: absolute;
+  inset: calc(-1 * var(--scene-entrance)) 0 calc(-1 * var(--scene-exit));
+  background: url('/art/save-date-path.webp') center / 100% 100% no-repeat var(--paper);
+}
+
+.date-scene__ahead,
+.date-scene__behind,
+.date-scene__drive {
+  position: absolute;
+  inset: 0;
+}
+
+/* The car's two bumpers set the edges of both text reveals as it drives over them. */
+.date-scene__ahead { clip-path: inset(var(--car-front) 0 0); }
+.date-scene__behind { clip-path: inset(0 0 calc(101% - var(--car-rear)) 0); }
+.date-scene__drive { transform: translateY(var(--car-rear)); }
+
+.date-scene__car {
+  display: block;
+  height: var(--car-height);
+  width: auto;
+  margin-inline: auto;
+  filter: drop-shadow(0 .6cqw .9cqw #2b170db3);
+}
+
+.date-scene__title {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  font-size: 13.5cqw;
+  line-height: 1.1;
+  white-space: nowrap;
+  transform-origin: top left;
+  transform: rotate(90deg) translateY(-50%) scaleX(1.31);
+}
+
+.date-scene__details {
+  position: absolute;
+  top: 17.7%;
+  inset-inline: 23%;
+}
+
+.date-scene__date {
+  font-size: 12cqw;
+  font-weight: 700;
+  line-height: .97;
+  text-transform: uppercase;
+}
+
+.date-scene__date span,
+.date-scene__names span { display: block; }
+
+.date-scene__occasion {
+  margin-top: 6cqw;
+  font-size: 4.7cqw;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.date-scene__names {
+  margin-top: 6cqw;
+  font-size: 7.5cqw;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce), (scripting: none) {
+  .date-scene,
+  .date-scene[data-phase='playing'] {
+    --save-date-progress: 1;
+    animation: none;
+  }
+}

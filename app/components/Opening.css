@@ -1,0 +1,135 @@
+/* ════════════════════════ the opening (sticky while the scene plays) ════════════════════════ */
+
+.opening-run { position: relative; height: calc(var(--sh, 100dvh) * 2); }
+.opening-stage { position: sticky; top: 0; height: var(--sh, 100dvh); overflow: clip; isolation: isolate; background: #f6ecdd; }
+
+/* ── the room ── the backdrop cloth sits at 19.6%–81.4% across and 12.5%–70% down the painting */
+.op-room {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 41%;
+  scale: calc(1 + .8 * var(--zoom, 0));
+  opacity: calc(1 - var(--card, 0));
+}
+.op-room-bg { background-image: url('/art/room-bg.webp'); }
+.op-backdrop { position: absolute; left: 19.6%; right: 18.6%; top: 12.5%; bottom: 30%; overflow: hidden; }
+.op-room-swing { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
+
+/* the curtains draw apart and gather at the sides */
+.op-curtains { position: absolute; left: 18.6%; right: 17.6%; top: 11.5%; bottom: 29%; display: flex; pointer-events: none; }
+.op-curtain { flex: 1; background-size: 100% 100%; background-repeat: no-repeat; filter: drop-shadow(0 1cqw 1.4cqw #4a2a1a40); }
+.op-curtain-left { background-image: url('/art/curtain-left.webp'); transform-origin: 0 50%; scale: calc(1 - .78 * var(--open, 0)) 1; }
+.op-curtain-right { background-image: url('/art/curtain-right.webp'); transform-origin: 100% 50%; scale: calc(1 - .78 * var(--open, 0)) 1; }
+/* the curtains breathe a little before they open */
+.op-curtain { animation: curtain-breathe 4s ease-in-out infinite alternate; }
+@keyframes curtain-breathe { to { filter: drop-shadow(0 1cqw 1.4cqw #4a2a1a40) brightness(1.03); } }
+
+/* a gleam crosses the brass bells */
+.op-bell-glint { position: absolute; left: 22%; right: 22%; top: 3.5%; height: 6%; background: linear-gradient(100deg, transparent 30%, #fff6d0aa 45%, transparent 60%); background-size: 250% 100%; mix-blend-mode: screen; animation: bell-glint 4.5s ease-in-out infinite; pointer-events: none; }
+@keyframes bell-glint { 0%, 30% { background-position: 120% 0; } 80%, 100% { background-position: -120% 0; } }
+
+/* ── the couple, seen from behind, slip out below as the camera moves in ── */
+.op-couple {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 2%;
+  width: 70%;
+  translate: -50% calc(var(--couple-out, 0) * 60%);
+  scale: calc(1 + .5 * var(--couple-out, 0));
+  transform-origin: 50% 100%;
+  opacity: calc(1 - var(--couple-out, 0) * 1.3);
+  filter: drop-shadow(0 2cqw 2.4cqw #3a221433);
+  pointer-events: none;
+}
+
+/* ── the invitation card ── */
+.op-card { position: absolute; inset: 0; z-index: 1; opacity: var(--card, 0); }
+.op-card-bg { background-image: url('/art/card-bg.webp'); }
+/* the card's foot (the pillar plinths) fades into plain paper, so the scroll section below carries straight on */
+.op-card::after { content: ''; position: absolute; inset: auto 0 0; height: 9%; z-index: 3; background: linear-gradient(180deg, #f9d8ac00, #f9d8ac 85%); pointer-events: none; }
+.op-garland { position: absolute; top: 0; width: 34%; translate: 0 calc(-100% * (1 - var(--drop, 0))); animation: garland-sway 4.4s ease-in-out infinite alternate; transform-origin: 50% 0; pointer-events: none; }
+.op-garland-left { left: 0; }
+.op-garland-right { right: 0; scale: -1 1; animation-delay: -2.2s; }
+@keyframes garland-sway { from { rotate: -1deg; } to { rotate: 1deg; } }
+
+/* the swing starts exactly where the zoomed painting was, then settles up into the top of the card */
+/* the swing (its marigold ropes run up off the top of the art) starts exactly where the zoomed painting was, then
+   settles up into the card with the ropes reaching the carved beam at the top */
+.op-card-swing {
+  position: absolute;
+  z-index: 1;
+  left: 19.6%;
+  width: 61.8%;
+  top: -30%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  transform-origin: 49.2% 71%;
+  scale: calc(1.8 - .72 * var(--settle, 0));
+  translate: 0 calc(-15% * var(--settle, 0));
+  animation: none;
+}
+@keyframes swing-sway { from { rotate: -.8deg; } to { rotate: .8deg; } }
+
+.op-text { position: absolute; z-index: 2; left: 13%; right: 13%; top: 61%; text-align: center; }
+.op-line {
+  opacity: 0;
+  translate: 0 2.4cqw;
+  filter: blur(3px);
+  transition: opacity .8s ease, translate .9s cubic-bezier(.22, 1, .36, 1), filter .8s ease;
+  transition-delay: calc(var(--i) * .45s + .2s);
+}
+.is-writing .op-line { opacity: 1; translate: none; filter: none; }
+.op-shloka { color: #9a6b2a; font-family: Noto Devanagari, 'Nirmala UI', sans-serif; font-size: 3.6cqw; }
+.op-hindi { color: #2a6f86; font-family: Noto Devanagari, 'Nirmala UI', sans-serif; font-size: 3.9cqw; line-height: 1.45; }
+.op-guest { margin-bottom: 1.2cqw; color: var(--rose); font-size: 4.2cqw; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.op-names { margin-top: 1.6cqw; color: #1f6080; font-family: Noto Devanagari, 'Nirmala UI', sans-serif; font-weight: 500; font-size: 8.6cqw; line-height: 1.25; text-shadow: 0 1px 0 #fff; }
+.op-names-latin { font-family: var(--serif); font-weight: 700; font-size: 6.4cqw; white-space: nowrap; }
+.op-names-hindi { color: var(--rose); font-family: Noto Devanagari, 'Nirmala UI', sans-serif; font-weight: 500; font-size: 4cqw; }
+.op-english { color: var(--rose); font-size: 3cqw; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; }
+.op-divider img { display: block; width: 30cqw; margin: 1.2cqw auto .6cqw; }
+.op-occasion { color: var(--rose); font-size: 4.6cqw; }
+.op-tagline { color: #b0803a; letter-spacing: .2em; font-size: 2.7cqw; }
+.op-date { margin-top: 1.8cqw; color: #2a6f86; font-family: Noto Devanagari, 'Nirmala UI', sans-serif; font-size: 3.6cqw; }
+
+/* the card melts into the paper sheet below */
+.op-fade { position: absolute; z-index: 3; inset: auto 0 0; height: 10%; background: linear-gradient(180deg, transparent, var(--paper)); pointer-events: none; }
+
+.op-petals { z-index: 3; }
+.op-leaves { z-index: 3; opacity: var(--card, 0); }
+.op-leaves .petal { border-radius: 0 80% 0 80%; background: linear-gradient(135deg, #b6c98f, #6f8a4a) !important; }
+
+.op-prompt {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: max(4%, env(safe-area-inset-bottom));
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+  min-height: 44px;
+  padding: 2.4cqw 5.5cqw;
+  border: 1px solid #b98b3e88;
+  border-radius: 99px;
+  cursor: pointer;
+  font-family: inherit;
+  background: #fffaf2dd;
+  box-shadow: 0 1cqw 3cqw #4a2a1a33;
+  color: #6b4220;
+  font-size: max(12px, 3.2cqw);
+  font-weight: 600;
+  letter-spacing: .14em;
+  white-space: nowrap;
+  opacity: var(--prompt, 1);
+  animation: bob 2.2s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+.op-prompt svg { width: max(16px, 4.4cqw); height: max(16px, 4.4cqw); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.op-prompt svg path:first-child { fill: currentColor; }
+.op-prompt:disabled { pointer-events: none; }
+
+@keyframes bob { 50% { translate: -50% 1.2cqw; } }
+
+.is-writing .op-prompt { opacity: 0; }

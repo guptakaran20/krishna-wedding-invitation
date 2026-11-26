@@ -1,0 +1,97 @@
+/* ════════════════════════ Reach out: the car uncovers the people to call, a group at a time ════════════════════════ */
+
+.contacts { padding: 14cqw 0 0; text-align: center; }
+.contacts .section-title { margin-bottom: 0; }
+
+.contacts-road {
+  position: relative;
+  overflow: clip;
+  /* the car fades in at the top of the road and away at its foot */
+  mask-image: linear-gradient(180deg, transparent, #000 6cqw, #000 calc(100% - 24cqw), transparent);
+}
+.contacts-road[data-phase='finished'] { mask-image: none; }
+
+/* everything the car has passed; the drive in Contacts.jsx clips it at the car's rear bumper. The road runs on below
+   the last group only while the car drives away down it, then closes up so the Thank You follows straight on */
+.contacts-behind { position: relative; padding: 4cqw 7cqw 44cqw; clip-path: inset(0 0 100% 0); transition: padding-bottom 1s cubic-bezier(.65, 0, .35, 1); }
+.contacts-road[data-phase='finished'] .contacts-behind { padding-bottom: 2cqw; clip-path: none !important; }
+
+.contacts-group + .contacts-group { margin-top: 6cqw; }
+.contacts-group-title { display: flex; align-items: center; gap: 3cqw; font: 500 max(10px, 2.7cqw) var(--serif); letter-spacing: .26em; text-transform: uppercase; color: #5d7852; }
+.contacts-group-title::before, .contacts-group-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--brass)); }
+.contacts-group-title::after { transform: scaleX(-1); }
+
+/* two people to a row; seals, names, roles and Call buttons each line up across it */
+.contacts-list { display: grid; grid-template-columns: 1fr 1fr; list-style: none; padding: 0; margin: 0; }
+.contacts-list.is-single { grid-template-columns: minmax(0, 50%); justify-content: center; }
+.contact { display: grid; grid-row: span 5; grid-template-rows: subgrid; justify-items: center; align-content: start; min-width: 0; padding: 3cqw 1.5cqw 1cqw; }
+
+/* the painted gold-and-peony medallion from the Utsavy families page, the initials in its middle */
+.contact-seal {
+  display: grid;
+  place-items: center;
+  width: 24cqw;
+  aspect-ratio: 1;
+  background: url('/art/contact-seal.webp') center / contain no-repeat;
+  filter: drop-shadow(0 2cqw 2.4cqw #7d274230);
+  scale: .4;
+  opacity: 0;
+  rotate: -30deg;
+  transition: scale .7s cubic-bezier(.34, 1.56, .64, 1), opacity .4s ease, rotate .7s cubic-bezier(.34, 1.56, .64, 1);
+}
+.contact-seal span { font: 500 5cqw/1 var(--serif); letter-spacing: .06em; color: var(--brass); translate: 0 -.4cqw; }
+.is-shown .contact-seal { scale: 1; opacity: 1; rotate: 0deg; }
+
+.contact-name { margin-top: 2.4cqw; font: 500 4.4cqw/1.25 var(--serif); font-variant-caps: small-caps; letter-spacing: .02em; color: var(--ink); text-wrap: balance; }
+.contact-label { margin-top: 1cqw; font: 500 2.5cqw/1.5 var(--serif); letter-spacing: .18em; text-transform: uppercase; color: #5d7852; text-wrap: balance; }
+.contact-num { margin-top: 1cqw; font-size: 3.4cqw; letter-spacing: .04em; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.contact-actions { display: flex; gap: 1.6cqw; align-self: end; padding-top: 2.4cqw; }
+.contact-name, .contact-label, .contact-num, .contact-actions { opacity: 0; translate: 0 2cqw; transition: opacity .6s ease, translate .6s cubic-bezier(.22, 1, .36, 1); }
+.is-shown :is(.contact-name, .contact-label, .contact-num, .contact-actions) { opacity: 1; translate: none; }
+.contact-name { transition-delay: .2s; }
+.contact-label, .contact-num { transition-delay: .3s; }
+.contact-actions { transition-delay: .4s; }
+/* the second person in a row follows a beat after the first */
+.contact:nth-child(2) .contact-seal { transition-delay: .15s; }
+.contact:nth-child(2) .contact-name { transition-delay: .35s; }
+.contact:nth-child(2) :is(.contact-label, .contact-num) { transition-delay: .45s; }
+.contact:nth-child(2) .contact-actions { transition-delay: .55s; }
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6cqw;
+  min-height: max(34px, 9cqw);
+  padding: 0 4.4cqw;
+  border: 1px solid #b8862f99;
+  border-radius: 999px;
+  color: #fdf0e2;
+  background: linear-gradient(180deg, #8f2f4d, #6e2038);
+  box-shadow: 0 2cqw 3.6cqw -2.4cqw #6e2038e6, inset 0 1px 0 #ffffff2e;
+  font: 600 max(10px, 2.7cqw) var(--serif);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform .25s cubic-bezier(.22, 1, .36, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.contact-btn svg { width: 1.3em; height: 1.3em; fill: none; stroke: #e8c27a; stroke-width: 1.7; stroke-linejoin: round; }
+.contact-btn:active { transform: scale(.95); }
+.contact-btn-wa { width: max(34px, 9cqw); padding: 0; color: #3d7a4e; background: #fffefb; border-color: #3d7a4e80; box-shadow: none; }
+.contact-btn-wa svg { stroke: currentColor; }
+@media (hover: hover) { .contact-btn:hover { transform: translateY(-2px); } }
+
+/* the car drives face down the middle of the road; it waits above the road until the drive begins */
+.contacts-drive { position: absolute; top: 0; left: 0; right: 0; transform: translateY(-100%); pointer-events: none; will-change: transform; }
+.contacts-drive img { display: block; width: 27cqw; margin-inline: auto; filter: drop-shadow(0 .6cqw .9cqw #2b170db3); }
+/* a little bob as it pulls up past each group */
+.contacts-drive[data-stopped='true'] img { animation: car-bob .85s ease-out; }
+@keyframes car-bob { 0% { translate: 0 0; } 30% { translate: 0 1.2cqw; } 60% { translate: 0 -.4cqw; } 100% { translate: 0 0; } }
+.contacts-road[data-phase='finished'] .contacts-drive { visibility: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .contacts-behind { clip-path: none; padding-bottom: 2cqw; transition: none; }
+  .contact-seal, .contact > * { transition: none !important; }
+  .contacts-drive { display: none; }
+}
