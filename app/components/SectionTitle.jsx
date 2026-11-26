@@ -6,7 +6,7 @@ export default function SectionTitle({ eyebrow, title, id }) {
     <header className="section-title" data-reveal>
       <p className="eyebrow">{eyebrow}</p>
       <h2 className="script" id={id}>{title}</h2>
-      <img className="title-divider" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
+      <img loading="lazy" className="title-divider" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
     </header>
   );
 }

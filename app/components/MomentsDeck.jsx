@@ -101,7 +101,7 @@ export default function MomentsDeck({ active = true }) {
               {...(isTop ? swipe : {})}
               aria-hidden={!isTop}
             >
-              <img className="deck-photo" src={photo.art} alt={isTop ? photo.caption : ''} draggable="false" />
+              <img loading="lazy" className="deck-photo" src={photo.art} alt={isTop ? photo.caption : ''} draggable="false" />
             </figure>
           );
         })}

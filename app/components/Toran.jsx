@@ -4,7 +4,7 @@ import './Toran.css';
 export default function Toran() {
   return (
     <div className="toran" aria-hidden="true">
-      <img src="/art/toran.webp" alt="" />
+      <img loading="lazy" src="/art/toran.webp" alt="" />
     </div>
   );
 }

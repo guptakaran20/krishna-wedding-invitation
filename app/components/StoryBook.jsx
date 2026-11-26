@@ -14,7 +14,7 @@ import './StoryBook.css';
 function Picture({ chapter }) {
   return (
     <div className="spread-picture">
-      <div className="spread-photo"><img src={chapter.art} alt="" /></div>
+      <div className="spread-photo"><img loading="lazy" src={chapter.art} alt="" /></div>
     </div>
   );
 }
@@ -26,7 +26,7 @@ function Words({ chapter, index }) {
       <p className="spread-num">{t('Chapter')} {numeral(index)}</p>
       <p className="spread-year">{chapter.year}</p>
       <h3 className="script">{chapter.title}</h3>
-      <img className="spread-rule" src="/art/lotus-divider.webp" alt="" />
+      <img loading="lazy" className="spread-rule" src="/art/lotus-divider.webp" alt="" />
       <p className="spread-text">{chapter.text}</p>
     </div>
   );
@@ -59,7 +59,7 @@ export default function StoryBook() {
       <div className="story-stage" ref={root}>
         <SectionTitle eyebrow={t('How it all began')} title={t('Our Story')} id="story-title" />
         <div className="storybook" data-reveal>
-          <img className="storybook-art" src="/art/open-book-tall.webp" alt="" aria-hidden="true" />
+          <img loading="lazy" className="storybook-art" src="/art/open-book-tall.webp" alt="" aria-hidden="true" />
           <div className="page-area page-top" aria-hidden="true"><Picture chapter={chapters[0]} /></div>
           <div className="page-area page-bottom" aria-hidden="true"><Words chapter={chapters[chapters.length - 1]} index={chapters.length - 1} /></div>
           {chapters.slice(0, -1).map((chapter, index) => (

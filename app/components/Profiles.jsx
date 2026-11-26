@@ -27,9 +27,9 @@ function Profile({ person, index }) {
     <article className={`profile profile-${side}${visible ? ' is-in' : ''}`} ref={ref} aria-labelledby={`profile-${index}`}>
       <div className="profile-photo">
         <div className="profile-window">
-          <img src={person.photo} alt={`${person.fullName}`} />
+          <img loading="lazy" src={person.photo} alt={`${person.fullName}`} />
         </div>
-        <img className="profile-frame" src="/art/arch-frame.webp" alt="" aria-hidden="true" />
+        <img loading="lazy" className="profile-frame" src="/art/arch-frame.webp" alt="" aria-hidden="true" />
         <span className="profile-garland" aria-hidden="true" />
       </div>
       <p className="profile-role">
@@ -38,7 +38,7 @@ function Profile({ person, index }) {
       </p>
       <h3 className="profile-name script" id={`profile-${index}`}>{person.name}</h3>
       <p className="profile-full">{person.fullName}</p>
-      <img className="profile-divider" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
+      <img loading="lazy" className="profile-divider" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
       <p className="profile-about">
         {person.about.split(' ').map((word, i) => (
           <span key={`${word}-${i}`} style={{ '--d': `${900 + i * 45}ms` }}>{word} </span>
@@ -63,8 +63,8 @@ function HandsMeet() {
   return (
     <div className={`hands-meet${visible ? ' is-in' : ''}`} ref={ref} aria-hidden="true">
       <span className="hm-glow" />
-      <img className="hm-hand hm-left" src="/art/hand-henna.webp" alt="" />
-      <img className="hm-hand hm-right" src="/art/hand-lotus.webp" alt="" />
+      <img loading="lazy" className="hm-hand hm-left" src="/art/hand-henna.webp" alt="" />
+      <img loading="lazy" className="hm-hand hm-right" src="/art/hand-lotus.webp" alt="" />
       <b className="hm-amp script">&amp;</b>
       <span className="hm-petals"><i /><i /><i /><i /><i /></span>
     </div>

@@ -50,22 +50,22 @@ export default function ScrollCard() {
     <section className={`scroll-card${open ? ' is-open' : ''}`} ref={root} aria-labelledby="scroll-names">
       <span className="scroll-glow" aria-hidden="true" />
       {/* a marigold toran with temple bells hangs above the scroll; diyas and a lotus urli sit below it */}
-      <img className="scroll-toran" src="/art/scroll-header.webp" alt="" aria-hidden="true" />
-      <img className="scroll-diyas" src="/art/scroll-footer.webp" alt="" aria-hidden="true" />
+      <img loading="lazy" className="scroll-toran" src="/art/scroll-header.webp" alt="" aria-hidden="true" />
+      <img loading="lazy" className="scroll-diyas" src="/art/scroll-footer.webp" alt="" aria-hidden="true" />
       {open && <Petals count={14} className="scroll-petals" />}
       <div className="scroll" onClick={play}>
-        <img className="scroll-layer scroll-paper" src="/art/scroll-paper.webp" alt="" aria-hidden="true" />
+        <img loading="lazy" className="scroll-layer scroll-paper" src="/art/scroll-paper.webp" alt="" aria-hidden="true" />
         <div className="scroll-words">
           <h2 className="sr-only" id="scroll-names">{invite.groom} and {invite.bride}</h2>
           <p className="sw sw-shloka" style={{ '--w': 0 }} aria-hidden="true">॥ श्री राधा कृष्णाय नमः ॥</p>
           <p className="sw sw-name script" style={{ '--w': 1 }} aria-hidden="true">{invite.groom}</p>
           <p className="sw sw-amp script" style={{ '--w': 3 }} aria-hidden="true">&amp;</p>
           <p className="sw sw-name script" style={{ '--w': 4 }} aria-hidden="true">{invite.bride}</p>
-          <p className="sw sw-rule" style={{ '--w': 6 }} aria-hidden="true"><img src="/art/lotus-divider.webp" alt="" /></p>
+          <p className="sw sw-rule" style={{ '--w': 6 }} aria-hidden="true"><img loading="lazy" src="/art/lotus-divider.webp" alt="" /></p>
           <p className="sw sw-line" style={{ '--w': 9 }}>{invite.city}</p>
         </div>
-        <img className="scroll-layer scroll-top" src="/art/scroll-top.webp" alt="" aria-hidden="true" />
-        <img className="scroll-layer scroll-bottom" src="/art/scroll-bottom.webp" alt="" aria-hidden="true" />
+        <img loading="lazy" className="scroll-layer scroll-top" src="/art/scroll-top.webp" alt="" aria-hidden="true" />
+        <img loading="lazy" className="scroll-layer scroll-bottom" src="/art/scroll-bottom.webp" alt="" aria-hidden="true" />
       </div>
       <p className="scroll-hint">{open ? '' : t('Tap the scroll to open')}</p>
     </section>

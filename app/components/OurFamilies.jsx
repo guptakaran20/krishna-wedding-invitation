@@ -54,7 +54,7 @@ function Tree({ family, onClose }) {
         </button>
         <p className="tree-eyebrow">{family.heading}</p>
         <h3 className="script">{t('Family Tree')}</h3>
-        <img className="tree-rule" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
+        <img loading="lazy" className="tree-rule" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
 
         {(family.tree || []).map((group, index) => (
           <Fragment key={index}>

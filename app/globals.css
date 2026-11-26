@@ -242,3 +242,33 @@ html:lang(hi) body * { letter-spacing: normal !important; text-transform: none !
 
 /* shared keyframes */
 @keyframes turn { to { rotate: 360deg; } }
+
+/* ════════════════════════ loading order and low-end phones (lib/artLoader.js, lib/device.js) ════════════════════════ */
+
+/* until the opening's paintings are in, the sheet below draws no CSS backgrounds, so they do not compete for the
+   connection (it is out of sight anyway: the page is held on the opening until the guest taps) */
+html.art-hold .sheet, html.art-hold .sheet::before, html.art-hold .sheet::after,
+html.art-hold .sheet *, html.art-hold .sheet *::before, html.art-hold .sheet *::after { background-image: none !important; }
+
+/* endless loops are switched right off (not just paused) while off screen: a paused transform loop still holds a GPU
+   layer, and forces one onto everything painted above it */
+.idle-loop.is-offscreen, .idle-before.is-offscreen::before, .idle-after.is-offscreen::after { animation-name: none !important; }
+/* sections more than a screen away let go of their will-change layers (they come back well before the guest arrives) */
+.is-far, .is-far * { will-change: auto !important; }
+
+/* phones: glass blur behind the corner button and the photo viewer is recomputed on every scroll frame; the panels are
+   nearly opaque, so a plain fill looks the same. The bell gleam blends normally (screen blending repaints the room
+   beneath it on every frame of its loop). */
+@media (pointer: coarse) {
+  .sound-toggle { backdrop-filter: none; }
+  .op-bell-glint { mix-blend-mode: normal; opacity: .6; }
+}
+
+/* lite mode: low-end phones and slow / data-saver connections. The look stays the same; what goes is the work the
+   phone does every frame while nothing is happening: idle loops (so the falling petals rest too), the butterflies, glass
+   blur, pulsing filters and blur fades. Every scene, the scroll story and the sounds all still play. Force with ?lite, or off with ?full-fx. */
+html.lite *, html.lite *::before, html.lite *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+html.lite .idle-loop, html.lite .idle-before::before, html.lite .idle-after::after { animation-name: none !important; }
+html.lite .butterflies, html.lite .petals { display: none; }
+html.lite .op-line, html.lite .op-curtain { filter: none !important; }
+html.lite .op-couple { filter: none; }

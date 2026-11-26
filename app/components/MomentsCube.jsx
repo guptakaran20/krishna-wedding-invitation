@@ -44,8 +44,8 @@ function Deco({ kind }) {
   if (kind === 'mono') return <span className="cube-deco"><b className="script">{invite.groom[0]}<i>&amp;</i>{invite.bride[0]}</b></span>;
   if (kind === 'date' && !invite.dateRevealed) return <span className="cube-deco cube-date"><i className="script">{t('Save the date')}</i><small>{t('to follow')}</small></span>;
   if (kind === 'date') return <span className="cube-deco cube-date"><b>{day}</b><i className="script">{month}</i><small>{year}</small></span>;
-  if (kind === 'marigold') return <span className="cube-deco"><img src="/art/events-marigold.webp" alt="" draggable="false" /></span>;
-  return <span className="cube-deco cube-lotus"><img src="/art/lotus-divider.webp" alt="" draggable="false" /><i className="script">{t('with love')}</i></span>;
+  if (kind === 'marigold') return <span className="cube-deco"><img loading="lazy" src="/art/events-marigold.webp" alt="" draggable="false" /></span>;
+  return <span className="cube-deco cube-lotus"><img loading="lazy" src="/art/lotus-divider.webp" alt="" draggable="false" /><i className="script">{t('with love')}</i></span>;
 }
 
 export default function MomentsCube() {

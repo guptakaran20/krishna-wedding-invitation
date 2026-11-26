@@ -21,6 +21,10 @@ import Petals from './components/Petals';
 import { Butterflies } from './components/Ornaments';
 import SoundToggle from './components/SoundToggle';
 import { LangProvider } from './lib/lang';
+import { startArtLoader } from './lib/artLoader';
+import { applyLite, watchFrames } from './lib/device';
+
+const HINDI_FONT = 'https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&display=swap';
 
 // The invitation scrolls inside the phone. The opening, storybook, and Events hold their scenes in place while you scroll.
 export default function Invitation() {
@@ -82,11 +86,22 @@ export default function Invitation() {
     });
     Object.assign(control.current, { root, lenis, reduced });
 
+    // paintings in the order the guest sees them, idle loops off while off screen, lite mode for phones that struggle
+    applyLite();
+    const stopArt = startArtLoader(root);
+    // the Hindi heading face, added once the page is up so it never blocks the first paint
+    if (!document.querySelector(`link[href="${HINDI_FONT}"]`)) {
+      document.head.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href: HINDI_FONT }));
+    }
+    const stopFrames = watchFrames();
+
     update();
     root.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
     return () => {
       reveal.disconnect();
+      stopArt();
+      stopFrames();
       lenis?.destroy();
       control.current.lenis = null;
       root.removeEventListener('scroll', schedule);

@@ -83,7 +83,7 @@ export default function SoundToggle() {
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
           </button>
         </header>
-        <img className="sidebar-rule" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
+        <img loading="lazy" className="sidebar-rule" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
 
         <section className="sidebar-group">
           <p className="sidebar-label">{t('Music')}</p>

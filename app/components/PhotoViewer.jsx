@@ -73,8 +73,8 @@ export function Viewer({ photos, index, onClose, onStep }) {
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
           </button>
           <div className="viewer-photo" {...swipe} style={{ '--drag': `${drag}px` }}>
-            <img className="viewer-picture" key={photo.art} src={photo.art} alt={photo.caption} draggable="false" />
-            <img className="viewer-carving" src="/art/photo-frame.webp" alt="" aria-hidden="true" draggable="false" />
+            <img loading="lazy" className="viewer-picture" key={photo.art} src={photo.art} alt={photo.caption} draggable="false" />
+            <img loading="lazy" className="viewer-carving" src="/art/photo-frame.webp" alt="" aria-hidden="true" draggable="false" />
           </div>
         </div>
         <p className="viewer-count">{pad(index + 1)} <i /> {pad(photos.length)}</p>

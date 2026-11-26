@@ -31,7 +31,7 @@ export default function Gate() {
           <h2 id="blessing-title">श्री गणेशाय नमः</h2>
           <div className="ganesha-wrap">
             <span className="ganesha-halo" aria-hidden="true" />
-            <img className="ganesha" src="/art/ganesha.webp" alt="Lord Ganesha in a saffron turban" lang="en" />
+            <img loading="lazy" className="ganesha" src="/art/ganesha.webp" alt="Lord Ganesha in a saffron turban" lang="en" />
           </div>
           <p>वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।<br />निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥</p>
         </div>
@@ -44,7 +44,7 @@ export default function Gate() {
           </div>
           <div className="art palace-art" />
           <FairyLights className="gate-lights" count={17} sag={18} />
-          <img className="gate-toran" src="/art/toran.webp" alt="" />
+          <img loading="lazy" className="gate-toran" src="/art/toran.webp" alt="" />
           <Diya className="gate-diya gate-diya-left" />
           <Diya className="gate-diya gate-diya-right" delay={.4} />
           <span className="gate-elephant gate-elephant-left" />

@@ -50,14 +50,14 @@ export default function Finale() {
     <section className="finale" aria-labelledby="thanks-title">
       <div className={`finale-words${writing ? ' is-writing' : ''}`} ref={words}>
         <div className="finale-flowers" aria-hidden="true">
-          <img className="finale-fl finale-fl-left" src="/art/corner-bouquet.webp" alt="" />
-          <img className="finale-fl finale-fl-centre" src="/art/events-marigold.webp" alt="" />
-          <img className="finale-fl finale-fl-right" src="/art/corner-bouquet.webp" alt="" />
+          <img loading="lazy" className="finale-fl finale-fl-left" src="/art/corner-bouquet.webp" alt="" />
+          <img loading="lazy" className="finale-fl finale-fl-centre" src="/art/events-marigold.webp" alt="" />
+          <img loading="lazy" className="finale-fl finale-fl-right" src="/art/corner-bouquet.webp" alt="" />
         </div>
         <h2 className="finale-line script" id="thanks-title">
           {LINE.map((line, index) => <span key={line} className="hw" style={{ '--i': index }}>{line}</span>)}
         </h2>
-        <img className="finale-rule" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
+        <img loading="lazy" className="finale-rule" src="/art/lotus-divider.webp" alt="" aria-hidden="true" />
         <p className="finale-names script">{invite.groom} <i>&amp;</i> {invite.bride}</p>
         <p className="finale-date">{invite.dateRevealed ? `${day} ${month} ${year}` : t('Date to be announced')}</p>
         <p className="finale-families">{invite.families}</p>
@@ -68,12 +68,12 @@ export default function Finale() {
       {/* the car drives in and parks on a slant beside the monogram */}
       <div className={`parking${arriving ? ' is-arriving' : ''}${parked ? ' is-parked' : ''}`} ref={lot} aria-hidden="true">
         <div className="parking-mark">
-          <img className="parking-spray" src="/art/corner-bouquet.webp" alt="" />
+          <img loading="lazy" className="parking-spray" src="/art/corner-bouquet.webp" alt="" />
           <span className="parking-mono script">{invite.groom[0]}<i>&amp;</i>{invite.bride[0]}</span>
           <span className="parking-caption">{t('Just married')}</span>
         </div>
         <div className="parking-car">
-          <img src="/art/wedding-car.webp" alt="" />
+          <img loading="lazy" src="/art/wedding-car.webp" alt="" />
           <span className="glint glint-1" /><span className="glint glint-2" /><span className="glint glint-3" />
         </div>
       </div>

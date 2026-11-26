@@ -376,9 +376,9 @@ export default function EventVine() {
           }}
         >
           {/* garlands, a bell and a lantern hang in the top corners beside the arch; a rangoli runs along its foot */}
-          <img className="events-corner events-corner-left" src="/art/events-corner.webp" alt="" aria-hidden="true" />
-          <img className="events-corner events-corner-right" src="/art/events-corner.webp" alt="" aria-hidden="true" />
-          <img className="events-rangoli" src="/art/events-footer.webp" alt="" aria-hidden="true" />
+          <img loading="lazy" className="events-corner events-corner-left" src="/art/events-corner.webp" alt="" aria-hidden="true" />
+          <img loading="lazy" className="events-corner events-corner-right" src="/art/events-corner.webp" alt="" aria-hidden="true" />
+          <img loading="lazy" className="events-rangoli" src="/art/events-footer.webp" alt="" aria-hidden="true" />
           <div className="events-view" ref={view}>
             {scenes.map((scene, index) => (
               <EventScene key={`${scene.event.start}-${scene.event.name}`} scene={scene} first={index === 0} />

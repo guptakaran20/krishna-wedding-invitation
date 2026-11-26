@@ -19,8 +19,8 @@ export default function Welcome() {
 
   return (
     <section className="welcome" aria-label="Welcome" data-reveal>
-      <img className="welcome-frame" src="/art/corner-bouquet.webp" alt="" aria-hidden="true" />
-      <img className="welcome-frame mirror" src="/art/corner-bouquet.webp" alt="" aria-hidden="true" />
+      <img loading="lazy" className="welcome-frame" src="/art/corner-bouquet.webp" alt="" aria-hidden="true" />
+      <img loading="lazy" className="welcome-frame mirror" src="/art/corner-bouquet.webp" alt="" aria-hidden="true" />
       <p className="welcome-om" aria-hidden="true">ॐ</p>
       <p className="welcome-dear script">Dear {guest},</p>
       <p className="welcome-text"><BlurWords text="with the blessings of Lord Ganesha and the love of our families, a new chapter is about to begin." delay={300} /></p>

@@ -15,12 +15,18 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    // art-hold: the sheet below the opening draws no CSS backgrounds until the opening's paintings are in
+    // (lib/artLoader.js lifts it). The Hindi heading face (Tiro) is added by page.js once the page is up, so it never
+    // blocks the first paint; the opening's own Devanagari face is local and preloaded here.
+    <html lang="en" className="art-hold" suppressHydrationWarning>
       <head>
-        {/* the Hindi headings and lines (the guest can switch the invitation to Hindi in the corner menu) */}
+        {/* the opening's paintings first: the room, its curtains, the couple and the swing */}
+        <link rel="preload" as="image" type="image/webp" href="/art/room-bg.webp" fetchPriority="high" />
+        <link rel="preload" as="image" type="image/webp" href="/art/curtain-left.webp" fetchPriority="high" />
+        <link rel="preload" as="image" type="image/webp" href="/art/curtain-right.webp" fetchPriority="high" />
+        <link rel="preload" as="font" type="font/woff2" href="/fonts/noto-sans-devanagari-500.woff2" crossOrigin="" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&display=swap" />
       </head>
       <body>{children}</body>
     </html>

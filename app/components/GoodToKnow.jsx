@@ -73,7 +73,7 @@ export default function GoodToKnow() {
           <div className="gtk-scenes" {...swipe}>
             {cards.map((item, i) => {
               const place = (i - index + cards.length) % cards.length;
-              return <img key={item.art} className="gtk-scene" data-place={Math.min(place, 2)} src={item.art} alt="" draggable="false" loading={i < 2 ? 'eager' : 'lazy'} />;
+              return <img key={item.art} className="gtk-scene" data-place={Math.min(place, 2)} src={item.art} alt="" draggable="false" loading="lazy" />;
             })}
           </div>
           <div className="gtk-content" aria-live="polite">
